@@ -1,0 +1,9 @@
+export { default as AfroWoman } from "./afro_woman.png";
+export { default as BrandNameNoBackground } from "./brand_name_no_background.png";
+export { default as BrandNameSquare } from "./brand_name_square.png";
+export { default as Danger } from "./danger.png";
+export { default as FifthWoman } from "./fifth_woman.png";
+export { default as FourWoman } from "./four_woman.png";
+export { default as SecondAfroWoman } from "./second_afrowoman.png";
+export { default as SecondWoman } from "./second_woman.png";
+export { default as ThirdWoman } from "./third_woman.png";
