@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import Anonim from "./anonim.svg?react";
 import Bug from "./bug.svg?react";
 import Children from "./children.svg?react";
@@ -21,24 +22,65 @@ import UEye from "./u_eye.svg?react";
 import UUser from "./u_user.svg?react";
 import Woman from "./woman.svg?react";
 import X from "./x.svg?react";
+
+const Styled10 = (Component) => styled(Component)`
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+`;
+
+const Styled13 = (Component) => styled(Component)`
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+`;
+
+const Styled20 = (Component) => styled(Component)`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
+
+const Styled23 = (Component) => styled(Component)`
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+`;
+
+const Styled24 = (Component) => styled(Component)`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`;
+
+const StyledArrow = (Component) => styled(Component)`
+  width: 10px;
+  height: 16px;
+  cursor: pointer;
+`;
+
 export const Icons = {
-  Copyright,
-  EditBasket,
-  Filter,
-  Galarary,
-  GreenHeart,
-  GreenRightArrow,
-  Heart,
-  LeftArrow,
-  Man,
-  Minus,
-  Paint,
-  Plus,
-  RightArrow,
-  SearchIcon,
-  TopArrow,
-  UEye,
-  UUser,
-  Woman,
-  X,
+  Anonim: Styled24(Anonim),
+  Bug: Styled24(Bug),
+  Children: Styled24(Children),
+  CopyPaper: Styled24(CopyPaper),
+  Copyright: Styled13(Copyright),
+  EditBasket: Styled24(EditBasket),
+  Filter: Styled24(Filter),
+  Galarary: Styled24(Galarary),
+  GreenHeart: Styled24(GreenHeart),
+  GreenRightArrow: StyledArrow(GreenRightArrow),
+  Heart: Styled24(Heart),
+  LeftArrow: StyledArrow(LeftArrow),
+  Man: Styled24(Man),
+  Minus: Styled20(Minus),
+  Paint: Styled24(Paint),
+  Plus: Styled20(Plus),
+  RightArrow: StyledArrow(RightArrow),
+  SearchIcon: Styled23(SearchIcon),
+  TopArrow: StyledArrow(TopArrow),
+  UEye: Styled24(UEye),
+  UUser: Styled24(UUser),
+  Woman: Styled24(Woman),
+  X: Styled10(X),
 };
