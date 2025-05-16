@@ -7,6 +7,7 @@ const StyledIconButton = styled(IconButton, {
   switch (variantType) {
     case "filled":
       return {
+        flexDirection: "column",
         backgroundColor: "#b8b8b8",
         color: "#fff",
         "&:hover": {
@@ -15,6 +16,7 @@ const StyledIconButton = styled(IconButton, {
       };
     case "outlined":
       return {
+        flexDirection: "column",
         border: "1px solid #a4a4a4",
         color: "#1976d2",
         backgroundColor: "transparent",
@@ -24,6 +26,7 @@ const StyledIconButton = styled(IconButton, {
       };
     case "ghost":
       return {
+        flexDirection: "column",
         color: "#a2a2a2",
         backgroundColor: "transparent",
         "&:hover": {

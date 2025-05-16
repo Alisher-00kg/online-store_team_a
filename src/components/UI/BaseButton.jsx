@@ -8,17 +8,7 @@ export const BaseButton = ({
   ...props
 }) => {
   return (
-    <StyledButton
-      variantType={variant}
-      onClick={onClick}
-      {...props}
-      // sx={{
-      //   width: "100%",
-      //   height: "50px",
-      //   background: "#000",
-      //   color: "#ffffff",
-      // }}
-    >
+    <StyledButton variantType={variant} onClick={onClick} {...props}>
       {children}
     </StyledButton>
   );
