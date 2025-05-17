@@ -1,25 +1,30 @@
 import styled from "styled-components";
-import { BaseIconButton } from "./BaseIconButton";
-import { Icons } from "../../assets/icons/icon";
-import { BaseButton } from "./BaseButton";
+import { BaseIconButton } from "./UI/BaseIconButton";
+import { Icons } from "../assets/icons/icon";
+import { BaseButton } from "./UI/BaseButton";
+import { useNavigate } from "react-router-dom";
 
-export const Card = ({ status, image, title, cost }) => {
+export const CardItem = ({ id, status, image, title, price }) => {
+  const navigate = useNavigate();
+  const handleCardClick = () => {
+    navigate(`/main/${id}`);
+  };
+
   return (
     <StyledWrapper>
-      <StyledImg src={image} alt="image" />
+      <StyledImg src={image} alt="image" onClick={() => handleCardClick(id)} />
       <StyledSecondLine>
         <StyledDescription>
           <StyledDiv>
             <StyledNewP>{status}</StyledNewP>
             <StyledsecondP>{title}</StyledsecondP>
-            <StyledSpan>{cost}</StyledSpan>
+            <StyledSpan>{price}</StyledSpan>
           </StyledDiv>
-
           <StyledBaseIconBtn>
-            <Icons.GreenHeart />
+            <Icons.Heart />
           </StyledBaseIconBtn>
         </StyledDescription>
-        <StyledBaseButn>Добавить в корзину</StyledBaseButn>
+        <BaseButton>Добавить в корзину</BaseButton>
       </StyledSecondLine>
     </StyledWrapper>
   );
@@ -36,6 +41,7 @@ const StyledWrapper = styled.div`
 const StyledImg = styled.img`
   width: 100%;
   height: 503px;
+  cursor: pointer;
 `;
 
 const StyledSecondLine = styled.div`
@@ -86,10 +92,4 @@ const StyledsecondP = styled.p`
   font-weight: 400;
   line-height: 20px;
   max-width: 287px;
-`;
-
-const StyledBaseButn = styled(BaseButton)`
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 20px;
 `;

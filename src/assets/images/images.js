@@ -7,3 +7,5 @@ export { default as FourWoman } from "./four_woman.png";
 export { default as SecondAfroWoman } from "./second_afrowoman.png";
 export { default as SecondWoman } from "./second_woman.png";
 export { default as ThirdWoman } from "./third_woman.png";
+export { default as BlueSky } from "./color/BlueSky.png.png";
+export { default as Beige } from "./color/beige.png.png";
