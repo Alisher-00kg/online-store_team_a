@@ -3,6 +3,7 @@ import { Modal } from "./Modal";
 import { Box, styled } from "@mui/material";
 import { BaseIconButton } from "../UI/BaseIconButton";
 import { BaseButton } from "../UI/BaseButton";
+import { Icons } from "../../assets/icons/icon";
 
 export const FilterModal = ({ open, onClose }) => {
   return (
@@ -10,7 +11,9 @@ export const FilterModal = ({ open, onClose }) => {
       <StyledBox>
         <StyledTopBox>
           <h2>Фильтровать</h2>
-          <BaseIconButton onClick={onClose}>X</BaseIconButton>
+          <BaseIconButton onClick={onClose}>
+            <Icons.X />
+          </BaseIconButton>
         </StyledTopBox>
         <StyledContainerSize>
           <p>По категориям:</p>

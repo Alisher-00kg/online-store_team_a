@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Modal } from "./Modal";
-import { Box, Divider, styled, TextField } from "@mui/material";
+import { Box, Divider, InputAdornment, styled, TextField } from "@mui/material";
 import { BaseIconButton } from "../UI/BaseIconButton";
 import { BaseButton } from "../UI/BaseButton";
+import { Icons } from "../../assets/icons/icon";
 
 export const AddProductModal = ({ open, onClose }) => {
   const [colorFields, setColorFields] = useState([]);
@@ -15,21 +16,78 @@ export const AddProductModal = ({ open, onClose }) => {
         <StyledWrapper>
           <StyledTopBox>
             <h2>Добавить новую позицию</h2>
-            <BaseIconButton onClick={onClose}>x</BaseIconButton>
+            <BaseIconButton onClick={onClose}>
+              <Icons.X />
+            </BaseIconButton>
           </StyledTopBox>
           <StyledForm>
             <WrapperInput>
               <StyledInput label="Название товара" />
-              <StyledInput label="Цена" />
-              <StyledInput label="Количество в запасе" />
-              <StyledInput label="Доступные размеры" />
+              <StyledInput label="Цена" type="number" />
+              <StyledInput label="Количество в запасе" type="number" />
+              <StyledInput
+                label="Доступные размеры"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <BaseIconButton>
+                        <Icons.Vector />
+                      </BaseIconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
               <Divider />
-              <StyledInput label="Цвет" />
-              <StyledInput label="Изображение" />
+              <StyledInput
+                label="Цвет"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <BaseIconButton>
+                        <Icons.Paint />
+                      </BaseIconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <StyledInput
+                label="Изображение"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <BaseIconButton>
+                        <Icons.Galarary />
+                      </BaseIconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
               {colorFields.map((_, index) => (
                 <React.Fragment key={index}>
-                  <StyledInput label="Загрузите цвет" />
-                  <StyledInput label="Загрузите изображение" />
+                  <StyledInput
+                    label="Загрузите цвет"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <BaseIconButton>
+                            <Icons.Paint />
+                          </BaseIconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <StyledInput
+                    label="Загрузите изображение"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <BaseIconButton>
+                            <Icons.Galarary />
+                          </BaseIconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
                 </React.Fragment>
               ))}
             </WrapperInput>
@@ -105,15 +163,19 @@ const StyledInput = styled(TextField)({
     color: "rgb(194, 197, 205)",
     fontWeight: "400",
   },
+  "& label.Mui-focused": {
+    color: "rgb(194, 197, 205)",
+  },
 });
 const WrapperInput = styled(Box)({
   width: "100%",
-  height: "430px",
+  height: "450px",
   display: "flex",
   flexDirection: "column",
   gap: "20px",
   overflowY: "auto",
   cursor: "default",
+  padding: "10px 0px",
 });
 const LeftAlignBox = styled(Box)({
   alignSelf: "flex-start",

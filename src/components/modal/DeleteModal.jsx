@@ -1,17 +1,19 @@
-import React from "react";
 import { Modal } from "./Modal";
 import { BaseIconButton } from "../UI/BaseIconButton";
 import { Box, styled, Typography } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
+import { Icons } from "../../assets/icons/icon";
 
 export const DeleteModal = ({ open, onClose }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
         <StyledWrapper>
-          <BaseIconButton>a</BaseIconButton>
+          <BaseIconButton>
+            <Icons.Coution />
+          </BaseIconButton>
           <Typography sx={{ fontSize: "18px", fontWeight: "700" }}>
-            Удалить эту позицию{" "}
+            Удалить эту позицию
           </Typography>
           <WrapperBtn>
             <StyledBoxBtn>
