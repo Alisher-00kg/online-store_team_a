@@ -10,7 +10,7 @@ export const FilterModal = ({ open, onClose }) => {
       <StyledBox>
         <StyledTopBox>
           <h2>Фильтровать</h2>
-          <BaseIconButton onClick={handleClose}>X</BaseIconButton>
+          <BaseIconButton onClick={onClose}>X</BaseIconButton>
         </StyledTopBox>
         <StyledContainerSize>
           <p>По категориям:</p>

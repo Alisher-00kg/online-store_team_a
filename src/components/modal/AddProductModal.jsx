@@ -63,12 +63,10 @@ const CenteredBox = styled(Box)({
 });
 const StyledWrapper = styled(Box)({
   width: "507px",
-  minHeight: "700px",
-  height: "auto",
+  height: "700px",
   padding: "24px 32px",
   background: "#ffffff",
   borderRadius: "10px",
-  overflowX: "auto",
 });
 const StyledTopBox = styled(Box)({
   display: "flex",
@@ -110,7 +108,7 @@ const StyledInput = styled(TextField)({
 });
 const WrapperInput = styled(Box)({
   width: "100%",
-  height: "400px",
+  height: "430px",
   display: "flex",
   flexDirection: "column",
   gap: "20px",
