@@ -4,3 +4,7 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
+:root {
+  --swiper-theme-color: #000 !important;
+  --swiper-navigation-size: 30px !important;
+}

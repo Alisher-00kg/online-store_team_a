@@ -34,7 +34,13 @@ const StyledIconButton = styled(IconButton, {
         },
       };
     default:
-      return {};
+      return {
+        flexDirection: "column",
+        gap: "6px",
+        "&:hover": {
+          backgroundColor: "#f9f9f9",
+        },
+      };
   }
 });
 

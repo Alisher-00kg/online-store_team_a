@@ -22,18 +22,24 @@ import UEye from "./u_eye.svg?react";
 import UUser from "./u_user.svg?react";
 import Woman from "./woman.svg?react";
 import X from "./x.svg?react";
-import LeftSquare from "./left_blue_square.svg?react";
-import RightSquare from "./right_square.svg?react";
+import Vector from "./Vector.svg?react";
+import Coution from "./coution.svg?react";
 
 const Styled10 = (Component) => styled(Component)`
   width: 10px;
-  height: 10px;
+  height: 5px;
   cursor: pointer;
 `;
 
 const Styled13 = (Component) => styled(Component)`
   width: 13px;
   height: 13px;
+  cursor: pointer;
+`;
+
+const Styled14 = (Component) => styled(Component)`
+  width: 14px;
+  height: 14px;
   cursor: pointer;
 `;
 
@@ -55,6 +61,12 @@ const Styled24 = (Component) => styled(Component)`
   cursor: pointer;
 `;
 
+const Styled47 = (Component) => styled(Component)`
+  width: 40px;
+  height: 47px;
+  cursor: pointer;
+`;
+
 const StyledArrow = (Component) => styled(Component)`
   width: 10px;
   height: 16px;
@@ -69,7 +81,7 @@ export const Icons = {
   Copyright: Styled13(Copyright),
   EditBasket: Styled24(EditBasket),
   Filter: Styled24(Filter),
-  Galarary: Styled24(Galarary),
+  Galarary: Styled20(Galarary),
   GreenHeart: Styled24(GreenHeart),
   GreenRightArrow: StyledArrow(GreenRightArrow),
   Heart: Styled24(Heart),
@@ -84,7 +96,7 @@ export const Icons = {
   UEye: Styled24(UEye),
   UUser: Styled24(UUser),
   Woman: Styled24(Woman),
-  X: Styled10(X),
-  LeftSquare: Styled24(LeftSquare),
-  RightSquare: Styled24(RightSquare),
+  X: Styled14(X),
+  Vector: Styled10(Vector),
+  Coution: Styled47(Coution),
 };
