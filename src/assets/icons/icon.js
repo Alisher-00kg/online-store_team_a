@@ -22,6 +22,8 @@ import UEye from "./u_eye.svg?react";
 import UUser from "./u_user.svg?react";
 import Woman from "./woman.svg?react";
 import X from "./x.svg?react";
+import LeftSquare from "./left_blue_square.svg?react";
+import RightSquare from "./right_square.svg?react";
 
 const Styled10 = (Component) => styled(Component)`
   width: 10px;
@@ -83,4 +85,6 @@ export const Icons = {
   UUser: Styled24(UUser),
   Woman: Styled24(Woman),
   X: Styled10(X),
+  LeftSquare: Styled24(LeftSquare),
+  RightSquare: Styled24(RightSquare),
 };
