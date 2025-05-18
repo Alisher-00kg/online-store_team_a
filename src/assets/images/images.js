@@ -1,5 +1,5 @@
 export { default as AfroWoman } from "./afro_woman.png";
-export { default as BrandNameNoBackground } from "./brand_name_no_background.png";
+export { default as BrandName } from "./BrandName.png";
 export { default as Logo } from "./logo.png";
 export { default as Danger } from "./danger.png";
 export { default as FifthWoman } from "./fifth_woman.png";
