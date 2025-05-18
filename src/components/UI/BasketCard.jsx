@@ -50,7 +50,7 @@ export const BasketCard = ({ image, title, cost }) => {
 const StyledWrapper = styled.div`
   width: 936px;
   height: 154px;
-  padding: 30px;
+  padding: 20px;
   display: flex;
   background-color: #fafafa;
 `;
