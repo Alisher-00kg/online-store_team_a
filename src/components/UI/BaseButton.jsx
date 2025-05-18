@@ -97,6 +97,7 @@ const StyledButton = styled(({ variantType, ...rest }) => <Button {...rest} />)(
     return {
       width: "100%",
       height: "50px",
+      textTransform: "none",
       ...styles,
     };
   }
