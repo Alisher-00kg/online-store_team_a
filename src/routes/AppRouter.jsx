@@ -1,0 +1,32 @@
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
+import { MainPage } from "../pages/MainPage";
+import { InnerPageCards } from "../pages/InnerPageCards";
+import { Layout } from "../Layout/Layout";
+
+export const AppRouter = () => {
+  const routes = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Navigate to="/main" />,
+        },
+        {
+          path: "/main/*",
+          element: <MainPage />,
+        },
+        {
+          path: "main/:cardId",
+          element: <InnerPageCards />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={routes} />;
+};

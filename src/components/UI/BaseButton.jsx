@@ -58,6 +58,34 @@ const StyledButton = styled(({ variantType, ...rest }) => <Button {...rest} />)(
           color: "rgb(48, 114, 63)",
         };
         break;
+      case "category":
+        styles = {
+          width: "95px",
+          height: "30px",
+          border: "0.2px solid rgb(0, 0, 0)",
+          color: "#000",
+          fontSize: "12px",
+          "&:active,  &:hover": {
+            backgroundColor: "rgba(48, 114, 63, 0.8)",
+            color: "#ffffff",
+            border: "none",
+          },
+        };
+        break;
+      case "size":
+        styles = {
+          width: "60px",
+          height: "20px",
+          border: "0.2px solid rgb(0, 0, 0)",
+          color: "#000",
+          fontSize: "12px",
+          "&:active, &:hover": {
+            backgroundColor: "rgba(48, 114, 63, 0.8)",
+            color: "#ffffff",
+            border: "none",
+          },
+        };
+        break;
       default:
         styles = {
           backgroundColor: "#000",
@@ -69,6 +97,7 @@ const StyledButton = styled(({ variantType, ...rest }) => <Button {...rest} />)(
     return {
       width: "100%",
       height: "50px",
+      textTransform: "none",
       ...styles,
     };
   }
