@@ -1,11 +1,5 @@
-import SignUp from "./auth/SignUp";
-
 const App = () => {
-  return (
-    <div>
-      <SignUp />
-    </div>
-  );
+  return <div>App</div>;
 };
 
 export default App;
