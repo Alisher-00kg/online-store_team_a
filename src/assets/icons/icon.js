@@ -22,7 +22,7 @@ import UEye from "./u_eye.svg?react";
 import UUser from "./u_user.svg?react";
 import Woman from "./woman.svg?react";
 import X from "./x.svg?react";
-
+import EyeOff from "../icons/eye-off.svg?react";
 const Styled10 = (Component) => styled(Component)`
   width: 10px;
   height: 10px;
@@ -83,4 +83,5 @@ export const Icons = {
   UUser: Styled24(UUser),
   Woman: Styled24(Woman),
   X: Styled10(X),
+  EyeOff: Styled24(EyeOff),
 };
