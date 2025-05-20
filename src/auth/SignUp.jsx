@@ -240,8 +240,7 @@ const Continer = styled.div`
   p {
     margin: 0;
     cursor: pointer;
-    color: #007bff;
-    text-decoration: underline;
+    color: #30723f;
   }
 `;
 
