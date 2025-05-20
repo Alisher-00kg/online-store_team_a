@@ -24,7 +24,7 @@ import Woman from "./woman.svg?react";
 import X from "./x.svg?react";
 import Vector from "./Vector.svg?react";
 import Coution from "./coution.svg?react";
-
+import EyeOff from "../icons/eye-off.svg?react";
 const Styled10 = (Component) => styled(Component)`
   width: 10px;
   height: 5px;
@@ -99,4 +99,5 @@ export const Icons = {
   X: Styled14(X),
   Vector: Styled10(Vector),
   Coution: Styled47(Coution),
+  EyeOff: Styled24(EyeOff),
 };
