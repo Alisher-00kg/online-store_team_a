@@ -1,4 +1,3 @@
-import { colors } from "@mui/material";
 import {
   AfroWoman,
   Beige,
@@ -147,6 +146,83 @@ export const cards = [
       FifthWoman,
       FifthWoman,
       FifthWoman,
+    ],
+    status: "NEW NOW",
+    title: "Трикотажное платье в полоску",
+    price: 5490,
+    colors: [
+      {
+        color: BlueSky,
+        colorTitle: "светло-синий",
+      },
+      {
+        color: Beige,
+        colorTitle: "бежевый",
+      },
+    ],
+    size: "XXS, XS, S, M, L, XL",
+    isFavorite: false,
+    isBasket: false,
+  },
+  {
+    id: 7,
+    image: AfroWoman,
+    images: [AfroWoman, AfroWoman, AfroWoman, AfroWoman, AfroWoman, AfroWoman],
+    status: "NEW NOW",
+    title: "Трикотажное платье в полоску",
+    price: 5490,
+    colors: [
+      {
+        color: BlueSky,
+        colorTitle: "светло-синий",
+      },
+      {
+        color: Beige,
+        colorTitle: "бежевый",
+      },
+    ],
+    size: "XXS, XS, S, M, L, XL",
+    isFavorite: false,
+    isBasket: false,
+  },
+  {
+    id: 8,
+    image: SecondWoman,
+    images: [
+      SecondWoman,
+      SecondWoman,
+      SecondWoman,
+      SecondWoman,
+      SecondWoman,
+      SecondWoman,
+    ],
+    status: "NEW NOW",
+    title: "Трикотажное платье в полоску",
+    price: 5490,
+    colors: [
+      {
+        color: BlueSky,
+        colorTitle: "светло-синий",
+      },
+      {
+        color: Beige,
+        colorTitle: "бежевый",
+      },
+    ],
+    size: "XXS, XS, S, M, L, XL",
+    isFavorite: false,
+    isBasket: false,
+  },
+  {
+    id: 9,
+    image: ThirdWoman,
+    images: [
+      ThirdWoman,
+      ThirdWoman,
+      ThirdWoman,
+      ThirdWoman,
+      ThirdWoman,
+      ThirdWoman,
     ],
     status: "NEW NOW",
     title: "Трикотажное платье в полоску",
