@@ -1,10 +1,10 @@
 import {
   AfroWoman,
-  BrandNameNoBackground,
-  BrandNameSquare,
+  BrandName,
   Danger,
   FifthWoman,
   FourWoman,
+  Logo,
   SecondAfroWoman,
   SecondWoman,
   ThirdWoman,
@@ -81,7 +81,7 @@ export const dresses = [
     size: "XS",
     status: "available",
     isFavorite: false,
-    image: BrandNameSquare,
+    image: Logo,
   },
   {
     id: 9,
@@ -90,6 +90,6 @@ export const dresses = [
     size: "M",
     status: "out of stock",
     isFavorite: false,
-    image: BrandNameNoBackground,
+    image: BrandName,
   },
 ];

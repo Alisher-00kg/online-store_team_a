@@ -8,13 +8,18 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
+import { useDispatch } from "react-redux";
+import { addToBasket } from "../store/reducer/cardMainSlice";
 
 export const InnerPageCards = () => {
   const { cardId } = useParams();
+  const dispatch = useDispatch();
   const selectedCard = cards.find((card) => card.id === Number(cardId));
-  //   const [mainImage, setMainImage] = useState(selectedCard?.image);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const handleAddToBasket = () => {
+    dispatch(addToBasket(selectedCard));
+  };
   if (!selectedCard) return <p>Карточка не найдена</p>;
   return (
     <Wrapper>
@@ -67,7 +72,7 @@ export const InnerPageCards = () => {
             <BoxColor
               key={index}
               onClick={() => setSelectedColorIndex(index)}
-              isSelected={index === selectedColorIndex}
+              $isSelected={index === selectedColorIndex}
             >
               <img src={clr.color} alt={clr.colorTitle} />
               {index === selectedColorIndex && <span>{clr.colorTitle}</span>}
@@ -81,7 +86,9 @@ export const InnerPageCards = () => {
           </div>
           <p>Товар будет доставлен в течении 10 дней</p>
         </BoxSizes>
-        <BaseButton sx={{ marginTop: "82%" }}>Добавить в корзину</BaseButton>
+        <BaseButton sx={{ marginTop: "82%" }} onClick={handleAddToBasket}>
+          Добавить в корзину
+        </BaseButton>
       </WrapperDataProduct>
     </Wrapper>
   );
@@ -91,7 +98,8 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: "71px";
-  margin-top: 60px;
+  margin-top: 150px;
+  margin-bottom: 100px;
 `;
 const StyledImageBlock = styled.div`
   display: flex;
@@ -182,8 +190,8 @@ const BoxColor = styled.div`
   img {
     width: 20px;
     height: 20px;
-    border: ${({ isSelected }) =>
-      isSelected ? "2px solid black" : "1px solid gray"};
+    border: ${({ $isSelected }) =>
+      $isSelected ? "2px solid black" : "1px solid gray"};
   }
   span {
     font-size: 12px;
