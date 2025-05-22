@@ -5,9 +5,20 @@ import { BaseButton } from "../UI/BaseButton";
 import { PaymentMethod } from "./PaymentMethod";
 import { useModal } from "../../context/ModalContext";
 import { BaseIconButton } from "../UI/BaseIconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { decrease, increase } from "../../store/reducer/cardMainSlice";
+import { Icons } from "../../assets/icons/icon";
 
 export const BasketModal = ({ open, onClose }) => {
   const { openModal, closeModal, isOpen } = useModal();
+  const dispatch = useDispatch();
+  const basket = useSelector((state) => state.cardsSlicer.shopCards);
+  const [selectedColors, setSelectedColors] = useState({});
+  const totalPrice = basket.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -58,7 +69,7 @@ export const BasketModal = ({ open, onClose }) => {
                           <BaseIconButton
                             onClick={() => dispatch(decrease(item.id))}
                           >
-                            <Icons.Minus />
+                            <Icons.Minus/>
                           </BaseIconButton>
                           <div>{item.quantity}</div>
                           <BaseIconButton
