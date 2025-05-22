@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dresses } from "../../utils/constants/mainCardArray";
 
 export const CardMainSlicer = createSlice({
   name: "CardMainSlicer",
@@ -7,89 +6,65 @@ export const CardMainSlicer = createSlice({
     error: null,
     role: "GUEST",
     isloading: false,
-    mainCards: dresses,
-    shopCards: [],
-    favoriteCards: [],
+    womanCardAdmin: [],
+    childrenCardAdmin: [],
+    manCardAdmin: [],
   },
   reducers: {
-    toggleFavorite: (state, action) => {
-      const isExist = state.shopCards.find(
-        (item) => item.id === action.payload.id
-      );
-      if (!isExist) {
-        state.mainCards = state.mainCards.map((item) =>
-          item.id === action.payload.id ? { ...item, isFavorite: true } : item
-        );
-        state.shopCards = [...state.shopCards, action.payload];
-      } else {
-        state.shopCards = state.shopCards.filter(
-          (item) => item.id !== action.payload.id
-        );
-        state.mainCards = state.mainCards.map((item) =>
-          item.id === action.payload.id ? { ...item, isFavorite: false } : item
-        );
-      }
+    addCardWoman: (state, action) => {
+      state.womanCardAdmin = [...state.womanCardAdmin, action.payload];
     },
-
-    addToShop: (state, action) => {
-      const isExist = state.shopCards.find(
-        (item) => item.id === action.payload.id
-      );
-
-      if (!isExist) {
-        state.shopCards = [
-          ...state.shopCards,
-          { ...action.payload, quantity: 1 },
-        ];
-      } else {
-        state.shopCards = state.shopCards.map((item) =>
-          item.id === action.payload.id
-            ? {
-                ...item,
-                cost: item.cost + action.payload.cost,
-                quantity: item.quantity + 1,
-              }
-            : item
-        );
-      }
+    addCardMan: (state, action) => {
+      state.manCardAdmin = [...state.manCardAdmin, action.payload];
     },
-
-    increase: (state, action) => {
-      state.shopCards = state.shopCards.map((item) =>
-        item.id === action.payload.id
-          ? {
-              ...item,
-              cost: item.cost + action.payload.cost,
-              quantity: item.quantity + 1,
-            }
-          : item
+    addCardChildren: (state, action) => {
+      state.childrenCardAdmin = [...state.childrenCardAdmin, action.payload];
+    },
+    deleteCardWoman: (state, action) => {
+      state.womanCardAdmin = state.womanCardAdmin.filter(
+        (item) => item.id !== action.payload
       );
     },
-
-    decrease: (state, action) => {
-      const targetItem = state.shopCards.find(
-        (item) => item.id === action.payload.id
+    deleteCardChildren: (state, action) => {
+      state.childrenCardAdmin = state.childrenCardAdmin.filter(
+        (item) => item.id !== action.payload
       );
-
-      if (targetItem?.quantity === 1) {
-        state.shopCards = state.shopCards.filter(
-          (item) => item.id !== action.payload.id
-        );
-      } else {
-        state.shopCards = state.shopCards.map((item) =>
-          item.id === action.payload.id
-            ? {
-                ...item,
-                cost: item.cost - action.payload.cost,
-                quantity: item.quantity - 1,
-              }
-            : item
-        );
-      }
+    },
+    deleteCardMan: (state, action) => {
+      state.manCardAdmin = state.manCardAdmin.filter(
+        (item) => item.id !== action.payload
+      );
+    },
+    editCardWoman: (state, action) => {
+      state.womanCardAdmin = state.womanCardAdmin.map((item) =>
+        item.id === action.payload.id ? { ...action.payload } : item
+      );
+    },
+    editCardMan: (state, action) => {
+      state.manCardAdmin = state.manCardAdmin.map((item) =>
+        item.id === action.payload.id ? { ...action.payload } : item
+      );
+    },
+    editCardChildren: (state, action) => {
+      state.childrenCardAdmin = state.childrenCardAdmin.map((item) =>
+        item.id === action.payload.id ? { ...action.payload } : item
+      );
     },
   },
 });
 
-export const { toggleFavorite, addToShop, increase, decrease } =
-  CardMainSlicer.actions;
-export default CardMainSlicer.reducer;
+export const {
+  toggleFavorite,
+  addToShop,
+  increase,
+  decrease,
+  addCardWoman,
+  addCardMan,
+  addCardChildren,
+  deleteCardWoman,
+  deleteCardMan,
+  deleteCardChildren,
+  editCardWoman,
+  editCardMan,
+  editCardChildren,
+} = CardMainSlicer.actions;

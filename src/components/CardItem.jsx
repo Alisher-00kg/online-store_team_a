@@ -4,7 +4,7 @@ import { Icons } from "../assets/icons/icon";
 import { BaseButton } from "./UI/BaseButton";
 import { useNavigate } from "react-router-dom";
 
-export const CardItem = ({ id, status, image, title, price }) => {
+export const CardItem = ({ id, name, price, quantity, size, colors }) => {
   const navigate = useNavigate();
   const handleCardClick = () => {
     navigate(`/main/${id}`);
@@ -12,12 +12,16 @@ export const CardItem = ({ id, status, image, title, price }) => {
 
   return (
     <StyledWrapper>
-      <StyledImg src={image} alt="image" onClick={() => handleCardClick(id)} />
+      <StyledImg
+        src={colors?.[0]?.image}
+        alt="image"
+        onClick={() => handleCardClick(id)}
+      />
       <StyledSecondLine>
         <StyledDescription>
           <StyledDiv>
-            <StyledNewP>{status}</StyledNewP>
-            <StyledsecondP>{title}</StyledsecondP>
+            <StyledNewP>New New</StyledNewP>
+            <StyledsecondP>{name}</StyledsecondP>
             <StyledSpan>{price}</StyledSpan>
           </StyledDiv>
           <StyledBaseIconBtn>

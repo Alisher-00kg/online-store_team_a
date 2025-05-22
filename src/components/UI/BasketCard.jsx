@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { AfroWoman } from "../../assets/images/images";
 import { Icons } from "../../assets/icons/icon";
 import { IconButton } from "@mui/material";
 

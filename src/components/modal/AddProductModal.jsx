@@ -1,15 +1,191 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import { Box, Divider, InputAdornment, styled, TextField } from "@mui/material";
 import { BaseIconButton } from "../UI/BaseIconButton";
 import { BaseButton } from "../UI/BaseButton";
 import { Icons } from "../../assets/icons/icon";
+import { useDispatch } from "react-redux";
+import {
+  addCardWoman,
+  editCardWoman,
+  addCardMan,
+  editCardMan,
+  addCardChildren,
+  editCardChildren,
+} from "../../store/reducer/slicer";
+import { Context } from "../../context/ContextProvider";
 
-export const AddProductModal = ({ open, onClose }) => {
-  const [colorFields, setColorFields] = useState([]);
+export const AddProductModal = ({ open, onClose, category }) => {
+  const dispatch = useDispatch();
+  const {
+    inputsValue,
+    setIntputsValue,
+    colorFields,
+    setColorFields,
+    isEdit,
+    setIsEdit,
+    setAddModal,
+  } = useContext(Context);
+
+  const [sizeError, setSizeError] = useState("");
+
   const addColorField = () => {
-    setColorFields((prev) => [...prev, { color: "", image: "" }]);
+    setColorFields((prev) => [
+      ...prev,
+      { colorsquare: "", image: "", id: Date.now() },
+    ]);
   };
+
+  useEffect(() => {
+    if (!open) {
+      setIntputsValue({
+        name: "",
+        price: "",
+        quantity: "",
+        size: "",
+      });
+      setColorFields([
+        {
+          colorsquare: "",
+          image: "",
+          id: Date.now(),
+        },
+      ]);
+      setSizeError("");
+    }
+  }, [open]);
+
+  const handleColorFieldChange = (index, field, value) => {
+    const updatedFields = [...colorFields];
+    updatedFields[index][field] = value;
+    setColorFields(updatedFields);
+  };
+
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "size") {
+      const sizes = value
+        .split(",")
+        .map((s) => s.trim().toLowerCase())
+        .filter((s, i, arr) => s && arr.indexOf(s) === i);
+
+      const allowedSizes = ["xxs", "xs", "s", "m", "l", "xl", "xxl"];
+      const invalid = sizes.find((s) => !allowedSizes.includes(s));
+
+      if (invalid) {
+        setSizeError(`Недопустимый размер: ${invalid}`);
+      } else {
+        setSizeError("");
+      }
+
+      setIntputsValue((prev) => ({
+        ...prev,
+        [name]: sizes.join(", "),
+      }));
+    } else {
+      setIntputsValue((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const getAddAction = () => {
+    if (category === "woman") return addCardWoman;
+    if (category === "man") return addCardMan;
+    if (category === "children") return addCardChildren;
+  };
+
+  const getEditAction = () => {
+    if (category == "woman") return editCardWoman;
+    if (category == "man") return editCardMan;
+    if (category == "children") return editCardChildren;
+  };
+
+  const handleSave = () => {
+    const { name, price, quantity, size } = inputsValue;
+    if (!name || !price || !quantity || !size) {
+      return;
+    }
+
+    const allowedColors = [
+      "black",
+      "white",
+      "red",
+      "blue",
+      "green",
+      "yellow",
+      "beige",
+      "gray",
+    ];
+    const colorsUsed = [];
+
+    const invalidColor = colorFields.find((c) => {
+      if (!c.colorsquare) return true;
+
+      const color = c.colorsquare.trim().toLowerCase();
+
+      if (colorsUsed.includes(color)) {
+        alert(`Цвет "${color}" уже добавлен`);
+        return true;
+      }
+
+      colorsUsed.push(color);
+
+      if (!allowedColors.includes(color)) {
+        alert(
+          `Цвет "${color}" недопустим. Допустимы: ${allowedColors.join(", ")}`
+        );
+        return true;
+      }
+
+      return false;
+    });
+
+    if (invalidColor) {
+      return;
+    }
+
+    const allowedSizes = ["xxs", "xs", "s", "m", "l", "xl", "xxl"];
+    const sizes = size.split(",").map((s) => s.trim().toLowerCase());
+
+    const invalidSize = sizes.find((s) => !allowedSizes.includes(s));
+    if (invalidSize) {
+      alert("Допустимы только размеры: XXS, XS, S, M, L, XL, XXL");
+      return;
+    }
+
+    const cardData = {
+      ...inputsValue,
+      colors: colorFields,
+      id: isEdit || Date.now(),
+    };
+
+    if (isEdit) {
+      dispatch(getEditAction()(cardData));
+      setIsEdit(null);
+    } else {
+      dispatch(getAddAction()(cardData));
+    }
+
+    setIntputsValue({
+      name: "",
+      price: "",
+      quantity: "",
+      size: "",
+    });
+    setColorFields([
+      {
+        colorsquare: "",
+        image: "",
+        id: Date.now(),
+      },
+    ]);
+    setSizeError("");
+    setAddModal(false);
+  };
+
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -22,11 +198,33 @@ export const AddProductModal = ({ open, onClose }) => {
           </StyledTopBox>
           <StyledForm>
             <WrapperInput>
-              <StyledInput label="Название товара" />
-              <StyledInput label="Цена" type="number" />
-              <StyledInput label="Количество в запасе" type="number" />
               <StyledInput
+                label="Название товара"
+                name="name"
+                value={inputsValue.name}
+                onChange={inputHandler}
+              />
+              <StyledInput
+                label="Цена"
+                type="number"
+                name="price"
+                value={inputsValue.price}
+                onChange={inputHandler}
+              />
+              <StyledInput
+                label="Количество в запасе"
+                type="number"
+                name="quantity"
+                value={inputsValue.quantity}
+                onChange={inputHandler}
+              />
+              <StyledInput
+                name="size"
+                value={inputsValue.size}
+                onChange={inputHandler}
                 label="Доступные размеры"
+                error={!!sizeError}
+                helperText={sizeError}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -38,34 +236,18 @@ export const AddProductModal = ({ open, onClose }) => {
                 }}
               />
               <Divider />
-              <StyledInput
-                label="Цвет"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <BaseIconButton>
-                        <Icons.Paint />
-                      </BaseIconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <StyledInput
-                label="Изображение"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <BaseIconButton>
-                        <Icons.Galarary />
-                      </BaseIconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              {colorFields.map((_, index) => (
-                <React.Fragment key={index}>
+              {colorFields.map((item, index) => (
+                <React.Fragment key={item.id}>
                   <StyledInput
                     label="Загрузите цвет"
+                    value={item.colorsquare}
+                    onChange={(e) =>
+                      handleColorFieldChange(
+                        index,
+                        "colorsquare",
+                        e.target.value
+                      )
+                    }
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -78,6 +260,10 @@ export const AddProductModal = ({ open, onClose }) => {
                   />
                   <StyledInput
                     label="Загрузите изображение"
+                    value={item.image}
+                    onChange={(e) =>
+                      handleColorFieldChange(index, "image", e.target.value)
+                    }
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -103,7 +289,9 @@ export const AddProductModal = ({ open, onClose }) => {
                 </BaseButton>
               </StyledBoxBtn>
               <StyledBoxBtn>
-                <BaseButton variantType="save">Сохранить</BaseButton>
+                <BaseButton variantType="save" onClick={handleSave}>
+                  Сохранить
+                </BaseButton>
               </StyledBoxBtn>
             </WrapperBtn>
           </StyledForm>
@@ -112,6 +300,7 @@ export const AddProductModal = ({ open, onClose }) => {
     </Modal>
   );
 };
+
 const CenteredBox = styled(Box)({
   position: "absolute",
   top: "50%",
@@ -145,26 +334,10 @@ const StyledInput = styled(TextField)({
     height: "50px",
     border: "1px solid rgba(126, 132, 148, 0.47)",
     borderRadius: "8px",
-    "& fieldset": {
-      border: "rgba(126, 132, 148, 0.47)",
-      color: "rgb(194, 197, 205)",
-    },
-    "&:hover fieldset": {
-      border: "rgba(126, 132, 148, 0.47)",
-      color: "rgb(194, 197, 205)",
-    },
-    "&.Mui-focused fieldset": {
-      border: "rgba(126, 132, 148, 0.47)",
-      boxShadow: "none",
-      color: "rgb(194, 197, 205)",
-    },
   },
   "& .MuiInputLabel-root": {
     color: "rgb(194, 197, 205)",
     fontWeight: "400",
-  },
-  "& label.Mui-focused": {
-    color: "rgb(194, 197, 205)",
   },
 });
 const WrapperInput = styled(Box)({

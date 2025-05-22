@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { cards } from "../utils/card";
 import { useParams } from "react-router-dom";
 import { BaseButton } from "../components/UI/BaseButton";
 import styled from "styled-components";
@@ -8,90 +7,143 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
+import BreadCrumbs from "../components/UI/BreadCrumbs";
+import { useSelector } from "react-redux";
+
+const colorTranslations = {
+  black: "Чёрный",
+  white: "Белый",
+  red: "Красный",
+  blue: "Синий",
+  green: "Зелёный",
+  yellow: "Жёлтый",
+  beige: "Бежевый",
+  gray: "Серый",
+};
 
 export const InnerPageCards = () => {
+  const { womanCardAdmin } = useSelector((state) => state.cardsSlicer);
   const { cardId } = useParams();
-  const selectedCard = cards.find((card) => card.id === Number(cardId));
-  //   const [mainImage, setMainImage] = useState(selectedCard?.image);
+
+  const selectedCard = womanCardAdmin.find(
+    (card) => card.id === Number(cardId)
+  );
+
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+
   if (!selectedCard) return <p>Карточка не найдена</p>;
+
   return (
-    <Wrapper>
-      <StyledImageBlock>
-        <SmallImageBlock>
-          <Swiper
-            direction="vertical"
-            onSwiper={setThumbsSwiper}
-            slidesPerView={4}
-            spaceBetween={-30}
-            navigation
-            watchSlidesProgress
-            modules={[Thumbs, Navigation]}
-          >
-            {selectedCard.images?.map((img, index) => (
-              <SwiperSlide key={index}>
-                <StyledImage
-                  src={img}
-                  alt="thumb"
-                  style={{
-                    height: "87px",
-                  }}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </SmallImageBlock>
-        <StyledMainImage>
-          <Swiper
-            navigation
-            thumbs={{ swiper: thumbsSwiper }}
-            modules={[Navigation, Thumbs]}
-            style={{ width: "100%", height: "100%" }}
-          >
-            {selectedCard.images?.map((img, index) => (
-              <SwiperSlide key={index}>
-                <img src={img} alt="main" />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </StyledMainImage>
-      </StyledImageBlock>
-      <WrapperDataProduct>
-        <BoxTitlePrice>
-          <p>{selectedCard.title}</p>
-          <span>KGS{selectedCard.price}</span>
-        </BoxTitlePrice>
-        <div>
-          {selectedCard.colors?.map((clr, index) => (
-            <BoxColor
-              key={index}
-              onClick={() => setSelectedColorIndex(index)}
-              isSelected={index === selectedColorIndex}
+    <>
+      <StyledBreadCrumbsContainer>
+        <BreadCrumbs />
+      </StyledBreadCrumbsContainer>
+      <Wrapper>
+        <StyledImageBlock>
+          <SmallImageBlock>
+            <Swiper
+              direction="vertical"
+              onSwiper={setThumbsSwiper}
+              slidesPerView={4}
+              spaceBetween={-30}
+              navigation
+              watchSlidesProgress
+              modules={[Thumbs, Navigation]}
+              onSlideChange={(swiper) =>
+                setActiveSlideIndex(swiper.activeIndex)
+              }
             >
-              <img src={clr.color} alt={clr.colorTitle} />
-              {index === selectedColorIndex && <span>{clr.colorTitle}</span>}
-            </BoxColor>
-          ))}
-        </div>
-        <BoxSizes>
-          <p>Таблица размеров</p>
-          <div>
-            <div>{selectedCard.size}</div>
+              {selectedCard.colors?.map((img, index) => (
+                <SwiperSlide key={index}>
+                  <StyledImage
+                    src={img.image}
+                    alt="thumb"
+                    style={{ height: "87px" }}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </SmallImageBlock>
+          <StyledMainImage>
+            <Swiper
+              navigation
+              thumbs={{ swiper: thumbsSwiper }}
+              modules={[Navigation, Thumbs]}
+              style={{ width: "100%", height: "100%" }}
+              onSlideChange={(swiper) =>
+                setActiveSlideIndex(swiper.activeIndex)
+              }
+            >
+              {selectedCard.images?.map((img, index) => (
+                <SwiperSlide key={index}>
+                  <img
+                    src={img}
+                    alt="main"
+                    onClick={() => setActiveSlideIndex(index)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </StyledMainImage>
+        </StyledImageBlock>
+        <WrapperDataProduct>
+          <BoxTitlePrice>
+            <p>{selectedCard.name}</p>
+            <span>KGS{selectedCard.price}</span>
+          </BoxTitlePrice>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ display: "flex", gap: "50px" }}>
+              {selectedCard.colors?.[activeSlideIndex] && (
+                <StyledSquaresdiv
+                  color={selectedCard.colors[activeSlideIndex].colorsquare}
+                  isSelected={true}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+            </div>
+
+            <div>
+              {selectedCard.colors?.[activeSlideIndex] && (
+                <span>
+                  {colorTranslations[
+                    selectedCard.colors[activeSlideIndex].colorsquare
+                      .toLowerCase()
+                      .trim()
+                  ] || selectedCard.colors[activeSlideIndex].colorsquare}
+                </span>
+              )}
+            </div>
           </div>
-          <p>Товар будет доставлен в течении 10 дней</p>
-        </BoxSizes>
-        <BaseButton sx={{ marginTop: "82%" }}>Добавить в корзину</BaseButton>
-      </WrapperDataProduct>
-    </Wrapper>
+
+          <BoxSizes>
+            <p>Таблица размеров</p>
+            <div>
+              <div>{selectedCard.size}</div>
+            </div>
+            <p>Товар будет доставлен в течении 10 дней</p>
+          </BoxSizes>
+          <BaseButton sx={{ marginTop: "82%" }}>Добавить в корзину</BaseButton>
+        </WrapperDataProduct>
+      </Wrapper>
+    </>
   );
 };
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: "71px";
-  margin-top: 60px;
+  margin-top: 130px;
 `;
 const StyledImageBlock = styled.div`
   display: flex;
@@ -202,4 +254,18 @@ const BoxSizes = styled.div`
     letter-spacing: 0.3px;
     text-decoration-line: underline;
   }
+`;
+
+const StyledBreadCrumbsContainer = styled.div`
+  position: relative;
+  top: 80px;
+  left: 135px;
+`;
+const StyledSquaresdiv = styled.div`
+  background-color: ${({ color }) => `${color}`};
+  border: ${({ isSelected }) =>
+    isSelected ? "2px solid black" : "1px solid gray"};
+
+  width: 20px;
+  height: 20px;
 `;

@@ -3,14 +3,17 @@ import { BaseIconButton } from "./UI/BaseIconButton";
 import { Icons } from "../assets/icons/icon";
 import { Logo } from "../assets/images/images";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
   return (
     <StyledHeader>
       <img
         src={Logo}
         alt="BrandNameSquare"
         style={{ width: "250px", height: "55px" }}
+        onClick={() => navigate("/adminpage/womanpage")}
       />
       <WrapperIcons>
         <BaseIconButton>
