@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { CardMainSlicer } from "./reducer/slicer";
+import CardMainSlicer from "./reducer/cardMainSlice";
 
 export const store = configureStore({
   reducer: {
-    cardsSlicer: CardMainSlicer.reducer,
+    cardsSlicer: CardMainSlicer,
   },
 });

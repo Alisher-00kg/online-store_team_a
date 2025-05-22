@@ -6,6 +6,7 @@ import {
 import { MainPage } from "../pages/MainPage";
 import { InnerPageCards } from "../pages/InnerPageCards";
 import { Layout } from "../Layout/Layout";
+import { FavoritePage } from "../pages/FavoritePage";
 
 export const AppRouter = () => {
   const routes = createBrowserRouter([
@@ -24,6 +25,10 @@ export const AppRouter = () => {
         {
           path: "main/:cardId",
           element: <InnerPageCards />,
+        },
+        {
+          path: "/favorites",
+          element: <FavoritePage />,
         },
       ],
     },
