@@ -2,8 +2,11 @@ import React from "react";
 import { Modal } from "./Modal";
 import { Box, styled } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
+import { PaymentMethod } from "./PaymentMethod";
+import { useModal } from "../../context/ModalContext";
 
 export const BasketModal = ({ open, onClose }) => {
+  const { openModal, closeModal, isOpen } = useModal();
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -18,10 +21,16 @@ export const BasketModal = ({ open, onClose }) => {
             <span>KGS 9 290</span>
           </BoxPayment>
           <StyledBoxBtn>
-            <BaseButton> Перейти к оплте</BaseButton>
+            <BaseButton onClick={() => openModal("payment")}>
+              Перейти к оплте
+            </BaseButton>
           </StyledBoxBtn>
         </StyledWrapper>
       </CenteredBox>
+      <PaymentMethod
+        open={isOpen("payment")}
+        onClose={() => closeModal("payment")}
+      />
     </Modal>
   );
 };
