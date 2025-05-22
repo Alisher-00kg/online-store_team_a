@@ -4,7 +4,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
 import { Icons } from "../../assets/icons/icon";
 import { useDispatch } from "react-redux";
-import { deleteCardWoman } from "../../store/reducer/slicer";
+import { deleteCardWoman } from "../../store/reducer/CardMainAdminslicer";
 
 export const DeleteModal = ({ open, onClose, deleteCard }) => {
   return (

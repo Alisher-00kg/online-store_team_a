@@ -12,7 +12,7 @@ import {
   editCardWoman,
   editCardMan,
   editCardChildren,
-} from "../../store/reducer/slicer";
+} from "../../store/reducer/CardMainAdminslicer";
 import { useDispatch, useSelector } from "react-redux";
 import { Context } from "../../context/ContextProvider";
 import { DeleteModal } from "../modal/DeleteModal";

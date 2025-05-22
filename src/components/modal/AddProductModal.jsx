@@ -12,7 +12,7 @@ import {
   editCardMan,
   addCardChildren,
   editCardChildren,
-} from "../../store/reducer/slicer";
+} from "../../store/reducer/CardMainAdminslicer";
 import { Context } from "../../context/ContextProvider";
 
 export const AddProductModal = ({ open, onClose, category }) => {

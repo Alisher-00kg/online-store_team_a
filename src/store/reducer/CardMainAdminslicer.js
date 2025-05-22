@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const CardMainSlicer = createSlice({
+export const CardMainAdminSlicer = createSlice({
   name: "CardMainSlicer",
   initialState: {
     error: null,
@@ -67,4 +67,4 @@ export const {
   editCardWoman,
   editCardMan,
   editCardChildren,
-} = CardMainSlicer.actions;
+} = CardMainAdminSlicer.actions;
