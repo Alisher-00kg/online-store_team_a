@@ -4,11 +4,11 @@ import { Box, styled, Typography } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseIconButton } from "../UI/BaseIconButton";
+import { decrease, increase } from "../../store/reducer/cardMainSlice";
 import { Icons } from "../../assets/icons/icon";
-import { decrease } from "../../store/slices/BasketSlice";
 
 export const BasketModal = ({ open, onClose }) => {
-  const basket = useSelector((state) => state.basket.basket);
+  const basket = useSelector((state) => state.cardsSlicer.shopCards);
   const [selectedColors, setSelectedColors] = useState({});
   const totalPrice = basket.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -81,7 +81,6 @@ export const BasketModal = ({ open, onClose }) => {
               </StyledWrapperBasket>
             )}
           </StyledBasketBox>
-
           {basket.length === 0 ? (
             ""
           ) : (

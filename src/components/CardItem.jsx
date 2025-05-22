@@ -3,23 +3,32 @@ import { BaseIconButton } from "./UI/BaseIconButton";
 import { Icons } from "../assets/icons/icon";
 import { BaseButton } from "./UI/BaseButton";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToBasket } from "../store/slices/BasketSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addToBasket, toggleFavorite } from "../store/reducer/cardMainSlice";
 
 export const CardItem = ({ id, status, image, title, price }) => {
-  // const navigate = useNavigate();
-  // const handleCardClick = () => {
-  //   navigate(`/main/${id}`);
-  // };
+  const navigate = useNavigate();
+  const handleCardClick = () => {
+    navigate(`/main/${id}`);
+  };
   const dispatch = useDispatch();
+  const mainCards = useSelector((state) => state.cardsSlicer.mainCards);
+  const currentCard = mainCards.find((card) => card.id === id);
+  const isFavorite = currentCard?.isFavorite;
   const handleAddToBasket = () => {
     dispatch(addToBasket({ id, image, title, price }));
   };
-
+  const handleAddToFavorite = () => {
+    if (isFavorite) {
+      const confirmDelete = window.confirm("Удалить товар из избранного?");
+      if (!confirmDelete) return;
+    }
+    dispatch(toggleFavorite({ id, image, title, price, status }));
+  };
   return (
     <StyledWrapper>
-      {/* <StyledImg src={image} alt="image" onClick={() => handleCardClick(id)} /> */}
-      <StyledImg src={image} alt="image" />
+      <StyledImg src={image} alt="image" onClick={() => handleCardClick(id)} />
+      {/* <StyledImg src={image} alt="image" /> */}
       <StyledSecondLine>
         <StyledDescription>
           <StyledDiv>
@@ -27,8 +36,8 @@ export const CardItem = ({ id, status, image, title, price }) => {
             <StyledsecondP>{title}</StyledsecondP>
             <StyledSpan>{price}</StyledSpan>
           </StyledDiv>
-          <StyledBaseIconBtn>
-            <Icons.Heart />
+          <StyledBaseIconBtn onClick={handleAddToFavorite}>
+            {isFavorite ? <Icons.GreenHeart /> : <Icons.Heart />}
           </StyledBaseIconBtn>
         </StyledDescription>
         <BaseButton onClick={handleAddToBasket}>Добавить в корзину</BaseButton>
