@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToBasket, toggleFavorite } from "../store/reducer/cardMainSlice";
 
-export const CardItem = ({ id, status, image, title, price }) => {
+export const CardItem = ({ id, name, price, quantity, size, colors }) => {
   const navigate = useNavigate();
   const handleCardClick = () => {
     navigate(`/main/${id}`);
@@ -32,8 +32,8 @@ export const CardItem = ({ id, status, image, title, price }) => {
       <StyledSecondLine>
         <StyledDescription>
           <StyledDiv>
-            <StyledNewP>{status}</StyledNewP>
-            <StyledsecondP>{title}</StyledsecondP>
+            <StyledNewP>New New</StyledNewP>
+            <StyledsecondP>{name}</StyledsecondP>
             <StyledSpan>{price}</StyledSpan>
           </StyledDiv>
           <StyledBaseIconBtn onClick={handleAddToFavorite}>

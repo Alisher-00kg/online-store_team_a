@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { cards } from "../utils/card";
 import { useParams } from "react-router-dom";
 import { BaseButton } from "../components/UI/BaseButton";
 import styled from "styled-components";
@@ -12,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { addToBasket } from "../store/reducer/cardMainSlice";
 
 export const InnerPageCards = () => {
+  const { womanCardAdmin } = useSelector((state) => state.cardsSlicer);
   const { cardId } = useParams();
   const dispatch = useDispatch();
   const selectedCard = cards.find((card) => card.id === Number(cardId));
@@ -21,6 +21,7 @@ export const InnerPageCards = () => {
     dispatch(addToBasket(selectedCard));
   };
   if (!selectedCard) return <p>Карточка не найдена</p>;
+
   return (
     <Wrapper>
       <StyledImageBlock>
@@ -93,11 +94,13 @@ export const InnerPageCards = () => {
     </Wrapper>
   );
 };
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: "71px";
+  margin-top: 130px;
   margin-top: 150px;
   margin-bottom: 100px;
 `;
@@ -210,4 +213,18 @@ const BoxSizes = styled.div`
     letter-spacing: 0.3px;
     text-decoration-line: underline;
   }
+`;
+
+const StyledBreadCrumbsContainer = styled.div`
+  position: relative;
+  top: 80px;
+  left: 135px;
+`;
+const StyledSquaresdiv = styled.div`
+  background-color: ${({ color }) => `${color}`};
+  border: ${({ isSelected }) =>
+    isSelected ? "2px solid black" : "1px solid gray"};
+
+  width: 20px;
+  height: 20px;
 `;

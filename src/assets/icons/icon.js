@@ -24,6 +24,13 @@ import Woman from "./woman.svg?react";
 import X from "./x.svg?react";
 import Vector from "./Vector.svg?react";
 import Coution from "./coution.svg?react";
+import RightSquare from "./right_square.svg?react";
+import LeftSquare from "./left_blue_square.svg?react";
+import BlackSquare from "./black_square.svg?react";
+import BlueSquare from "./blue_square.svg?react";
+import PinkSquare from "./pink_square.svg?react";
+import Basket from "./basket.svg?react";
+
 import EyeOff from "../icons/eye-off.svg?react";
 import Wallet from "./wallet.svg?react";
 import SberBank from "./sberBank.svg?react";
@@ -105,9 +112,15 @@ export const Icons = {
   UEye: Styled24(UEye),
   UUser: Styled24(UUser),
   Woman: Styled24(Woman),
+  RightSquare: Styled20(RightSquare),
+  LeftSquare: Styled20(LeftSquare),
+  BlackSquare: Styled20(BlackSquare),
+  BlueSquare: Styled20(BlueSquare),
+  PinkSquare: Styled20(PinkSquare),
   X: Styled14(X),
   Vector: Styled10(Vector),
   Coution: Styled47(Coution),
+  Basket: Styled24(Basket),
   EyeOff: Styled24(EyeOff),
   Wallet: Styled24(Wallet),
   SberBank: Styled24(SberBank),

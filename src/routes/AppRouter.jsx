@@ -8,6 +8,11 @@ import { InnerPageCards } from "../pages/InnerPageCards";
 import { Layout } from "../Layout/Layout";
 import { FavoritePage } from "../pages/FavoritePage";
 
+import AdminLayout from "../Layout/AdminLayout";
+import { ManPage } from "../pages/manPage";
+import { WomanPage } from "../pages/WomanPage";
+import { ChildrenPage } from "../pages/ChildrenPage";
+
 export const AppRouter = () => {
   const routes = createBrowserRouter([
     {
@@ -29,6 +34,28 @@ export const AppRouter = () => {
         {
           path: "/favorites",
           element: <FavoritePage />,
+        },
+      ],
+    },
+    {
+      path: "adminpage",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "adminpage",
+          element: <Navigate to="womanpage" />,
+        },
+        {
+          path: "childrenpage",
+          element: <ChildrenPage />,
+        },
+        {
+          path: "manpage",
+          element: <ManPage />,
+        },
+        {
+          path: "womanpage",
+          element: <WomanPage />,
         },
       ],
     },

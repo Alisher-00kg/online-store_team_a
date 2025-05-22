@@ -3,10 +3,10 @@ import { cards } from "../utils/card";
 import { CardItem } from "./CardItem";
 import styled from "styled-components";
 
-export const CardList = () => {
+export const CardList = ({ array }) => {
   return (
     <StyledWrapper>
-      {cards?.map((item) => (
+      {array?.map((item) => (
         <CardItem key={item.id} {...item} />
       ))}
     </StyledWrapper>
@@ -15,5 +15,5 @@ export const CardList = () => {
 const StyledWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 60px;
+  gap: 93px;
 `;
