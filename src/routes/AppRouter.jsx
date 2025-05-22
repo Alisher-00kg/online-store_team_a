@@ -37,7 +37,7 @@ export const AppRouter = () => {
       element: <AdminLayout />,
       children: [
         {
-          index: true,
+          path: "adminpage",
           element: <Navigate to="womanpage" />,
         },
         {

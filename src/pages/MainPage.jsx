@@ -53,7 +53,11 @@ export const MainPage = () => {
           />
         </StyledFilterIcon>
       </StyledFilterDiv>
-      <CardList array={filteredCards} />
+      {filteredCards.length > 0 ? (
+        <CardList array={filteredCards} />
+      ) : (
+        <StyledP>Пусто</StyledP>
+      )}
     </Wrapper>
   );
 };
@@ -68,6 +72,11 @@ const StyledFilterDiv = styled.div`
   font-weight: 400;
   line-height: 24px;
   top: -40px;
+`;
+const StyledP = styled.p`
+  display: flex;
+  width: 100%;
+  justify-content: center;
 `;
 const StyledFilterIcon = styled.div`
   position: absolute;
