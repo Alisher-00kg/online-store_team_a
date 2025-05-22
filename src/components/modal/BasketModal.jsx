@@ -2,19 +2,12 @@ import React, { useState } from "react";
 import { Modal } from "./Modal";
 import { Box, styled, Typography } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
-import { useDispatch, useSelector } from "react-redux";
+import { PaymentMethod } from "./PaymentMethod";
+import { useModal } from "../../context/ModalContext";
 import { BaseIconButton } from "../UI/BaseIconButton";
-import { decrease, increase } from "../../store/reducer/cardMainSlice";
-import { Icons } from "../../assets/icons/icon";
 
 export const BasketModal = ({ open, onClose }) => {
-  const basket = useSelector((state) => state.cardsSlicer.shopCards);
-  const [selectedColors, setSelectedColors] = useState({});
-  const totalPrice = basket.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const dispatch = useDispatch();
+  const { openModal, closeModal, isOpen } = useModal();
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -96,6 +89,10 @@ export const BasketModal = ({ open, onClose }) => {
           )}
         </StyledWrapper>
       </CenteredBox>
+      <PaymentMethod
+        open={isOpen("payment")}
+        onClose={() => closeModal("payment")}
+      />
     </Modal>
   );
 };

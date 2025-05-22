@@ -25,6 +25,10 @@ import X from "./x.svg?react";
 import Vector from "./Vector.svg?react";
 import Coution from "./coution.svg?react";
 import EyeOff from "../icons/eye-off.svg?react";
+import Wallet from "./wallet.svg?react";
+import SberBank from "./sberBank.svg?react";
+import TBank from "./TBank.svg?react";
+import SBP from "./SBP.svg?react";
 const Styled10 = (Component) => styled(Component)`
   width: 10px;
   height: 5px;
@@ -72,6 +76,11 @@ const StyledArrow = (Component) => styled(Component)`
   height: 16px;
   cursor: pointer;
 `;
+const StyledSPB = (Component) => styled(Component)`
+  width: 50px;
+  height: 24px;
+  cursor: pointer;
+`;
 
 export const Icons = {
   Anonim: Styled24(Anonim),
@@ -100,4 +109,8 @@ export const Icons = {
   Vector: Styled10(Vector),
   Coution: Styled47(Coution),
   EyeOff: Styled24(EyeOff),
+  Wallet: Styled24(Wallet),
+  SberBank: Styled24(SberBank),
+  TBank: Styled24(TBank),
+  SBP: StyledSPB(SBP),
 };

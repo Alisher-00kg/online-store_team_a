@@ -7,6 +7,7 @@ export default function Input({
   value,
   onChange,
   InputProps,
+  type,
   ...props
 }) {
   return (
@@ -18,6 +19,7 @@ export default function Input({
         value={value}
         onChange={onChange}
         InputProps={InputProps}
+        type={type}
         {...props}
       />
     </div>
