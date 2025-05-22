@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
+<<<<<<< HEAD
 import BreadCrumbs from "../components/UI/BreadCrumbs";
 import { useSelector } from "react-redux";
 
@@ -20,10 +21,15 @@ const colorTranslations = {
   beige: "Бежевый",
   gray: "Серый",
 };
+=======
+import { useDispatch } from "react-redux";
+import { addToBasket } from "../store/reducer/cardMainSlice";
+>>>>>>> f7d40b6e52168b498c0b44cfaddc6854049c88d4
 
 export const InnerPageCards = () => {
   const { womanCardAdmin } = useSelector((state) => state.cardsSlicer);
   const { cardId } = useParams();
+<<<<<<< HEAD
 
   const selectedCard = womanCardAdmin.find(
     (card) => card.id === Number(cardId)
@@ -32,9 +38,19 @@ export const InnerPageCards = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
+=======
+  const dispatch = useDispatch();
+  const selectedCard = cards.find((card) => card.id === Number(cardId));
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const handleAddToBasket = () => {
+    dispatch(addToBasket(selectedCard));
+  };
+>>>>>>> f7d40b6e52168b498c0b44cfaddc6854049c88d4
   if (!selectedCard) return <p>Карточка не найдена</p>;
 
   return (
+<<<<<<< HEAD
     <>
       <StyledBreadCrumbsContainer>
         <BreadCrumbs />
@@ -53,6 +69,59 @@ export const InnerPageCards = () => {
               onSlideChange={(swiper) =>
                 setActiveSlideIndex(swiper.activeIndex)
               }
+=======
+    <Wrapper>
+      <StyledImageBlock>
+        <SmallImageBlock>
+          <Swiper
+            direction="vertical"
+            onSwiper={setThumbsSwiper}
+            slidesPerView={4}
+            spaceBetween={-30}
+            navigation
+            watchSlidesProgress
+            modules={[Thumbs, Navigation]}
+          >
+            {selectedCard.images?.map((img, index) => (
+              <SwiperSlide key={index}>
+                <StyledImage
+                  src={img}
+                  alt="thumb"
+                  style={{
+                    height: "87px",
+                  }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </SmallImageBlock>
+        <StyledMainImage>
+          <Swiper
+            navigation
+            thumbs={{ swiper: thumbsSwiper }}
+            modules={[Navigation, Thumbs]}
+            style={{ width: "100%", height: "100%" }}
+          >
+            {selectedCard.images?.map((img, index) => (
+              <SwiperSlide key={index}>
+                <img src={img} alt="main" />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </StyledMainImage>
+      </StyledImageBlock>
+      <WrapperDataProduct>
+        <BoxTitlePrice>
+          <p>{selectedCard.title}</p>
+          <span>KGS{selectedCard.price}</span>
+        </BoxTitlePrice>
+        <div>
+          {selectedCard.colors?.map((clr, index) => (
+            <BoxColor
+              key={index}
+              onClick={() => setSelectedColorIndex(index)}
+              $isSelected={index === selectedColorIndex}
+>>>>>>> f7d40b6e52168b498c0b44cfaddc6854049c88d4
             >
               {selectedCard.colors?.map((img, index) => (
                 <SwiperSlide key={index}>
@@ -123,6 +192,7 @@ export const InnerPageCards = () => {
               )}
             </div>
           </div>
+<<<<<<< HEAD
 
           <BoxSizes>
             <p>Таблица размеров</p>
@@ -135,6 +205,15 @@ export const InnerPageCards = () => {
         </WrapperDataProduct>
       </Wrapper>
     </>
+=======
+          <p>Товар будет доставлен в течении 10 дней</p>
+        </BoxSizes>
+        <BaseButton sx={{ marginTop: "82%" }} onClick={handleAddToBasket}>
+          Добавить в корзину
+        </BaseButton>
+      </WrapperDataProduct>
+    </Wrapper>
+>>>>>>> f7d40b6e52168b498c0b44cfaddc6854049c88d4
   );
 };
 
@@ -143,7 +222,12 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: "71px";
+<<<<<<< HEAD
   margin-top: 130px;
+=======
+  margin-top: 150px;
+  margin-bottom: 100px;
+>>>>>>> f7d40b6e52168b498c0b44cfaddc6854049c88d4
 `;
 const StyledImageBlock = styled.div`
   display: flex;
@@ -234,8 +318,8 @@ const BoxColor = styled.div`
   img {
     width: 20px;
     height: 20px;
-    border: ${({ isSelected }) =>
-      isSelected ? "2px solid black" : "1px solid gray"};
+    border: ${({ $isSelected }) =>
+      $isSelected ? "2px solid black" : "1px solid gray"};
   }
   span {
     font-size: 12px;

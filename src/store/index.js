@@ -3,6 +3,7 @@ import { CardMainAdminSlicer } from "./reducer/CardMainAdminslicer";
 
 export const store = configureStore({
   reducer: {
-    cardsAdmin: CardMainAdminSlicer.reducer,
+    cardsSlicer: CardMainSlicer,
+    cardsAdminSlicer: CardMainAdminSlicer.reducer,
   },
 });

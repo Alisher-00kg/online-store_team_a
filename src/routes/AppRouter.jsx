@@ -6,6 +6,7 @@ import {
 import { MainPage } from "../pages/MainPage";
 import { InnerPageCards } from "../pages/InnerPageCards";
 import { Layout } from "../Layout/Layout";
+import { FavoritePage } from "../pages/FavoritePage";
 
 import AdminLayout from "../Layout/AdminLayout";
 import { ManPage } from "../pages/manPage";
@@ -29,6 +30,10 @@ export const AppRouter = () => {
         {
           path: "main/:cardId",
           element: <InnerPageCards />,
+        },
+        {
+          path: "/favorites",
+          element: <FavoritePage />,
         },
       ],
     },

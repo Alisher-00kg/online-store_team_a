@@ -64,6 +64,7 @@ export const MainPage = () => {
 
 const Wrapper = styled.div`
   padding: 50px 120px;
+  margin-top: 100px;
 `;
 const StyledFilterDiv = styled.div`
   height: 17vh;
