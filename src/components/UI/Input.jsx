@@ -6,6 +6,7 @@ export default function Input({
   placeholder,
   value,
   onChange,
+  InputProps,
   ...props
 }) {
   return (
@@ -16,6 +17,7 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        InputProps={InputProps}
         {...props}
       />
     </div>

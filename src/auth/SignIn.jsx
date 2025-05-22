@@ -35,7 +35,8 @@ const SignIn = () => {
             <StyledInput
               {...field}
               id="username"
-              label="email"
+              label="Логин"
+              type="email"
               placeholder="Введите логин"
               InputProps={{
                 startAdornment: (
@@ -68,7 +69,7 @@ const SignIn = () => {
             <StyledInput
               {...field}
               id="password"
-              label="password"
+              label="Пароль"
               placeholder="Введите пароль"
               type={showPassword ? "text" : "password"}
               InputProps={{
@@ -168,6 +169,9 @@ const SubmitButton = styled(BaseButton)`
 `;
 
 const AdditionalText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 25px;
   font-size: 14px;
   color: #555;
@@ -175,11 +179,15 @@ const AdditionalText = styled.div`
   a {
     color: #121314c6;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 15px;
     cursor: pointer;
 
     &:hover {
       text-decoration: underline;
     }
+  }
+  p {
+    color: #6a6a6a;
   }
 `;
