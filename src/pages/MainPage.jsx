@@ -11,4 +11,5 @@ export const MainPage = () => {
 };
 const Wrapper = styled.div`
   padding: 50px 120px;
+  margin-top: 61px;
 `;

@@ -12,7 +12,6 @@ import { Navigation, Thumbs } from "swiper/modules";
 export const InnerPageCards = () => {
   const { cardId } = useParams();
   const selectedCard = cards.find((card) => card.id === Number(cardId));
-  //   const [mainImage, setMainImage] = useState(selectedCard?.image);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   if (!selectedCard) return <p>Карточка не найдена</p>;
