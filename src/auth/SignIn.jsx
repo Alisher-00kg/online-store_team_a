@@ -79,7 +79,7 @@ const SignIn = () => {
                       onClick={() => setShowPassword((prev) => !prev)}
                       type="button"
                     >
-                      {showPassword ? <Icons.UUser /> : <Icons.UEye />}
+                      {showPassword ? <Icons.EyeOff /> : <Icons.UEye />}
                     </BaseIconButton>
                   </InputAdornment>
                 ),
@@ -105,7 +105,7 @@ const SignIn = () => {
 };
 
 export default SignIn;
-// check
+
 const Form = styled.form`
   width: 408px;
   height: 71px;
@@ -114,7 +114,7 @@ const Form = styled.form`
 `;
 
 const Title = styled.h2`
-  font-weight: 600;
+  font-weight: 400;
   font-size: 26px;
   margin-bottom: 30px;
   color: #000;
