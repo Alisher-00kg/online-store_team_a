@@ -6,14 +6,16 @@ import { Icons } from "../assets/icons/icon";
 import { FilterModal } from "../components/modal/FilterModal";
 import { useSelector } from "react-redux";
 import { Context } from "../context/ContextProvider";
+import { useModal } from "../context/ModalContext";
 
 export const MainPage = () => {
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const { openModal, closeModal, isOpen } = useModal();
+  // const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [sizeFilter, setSizeFilter] = useState("");
   const { tab } = useContext(Context);
 
-  const openModalHandler = () => setIsFilterModalOpen(true);
-  const closeModalHandler = () => setIsFilterModalOpen(false);
+  // const openModalHandler = () => setIsFilterModalOpen(true);
+  // const closeModalHandler = () => setIsFilterModalOpen(false);
 
   const { womanCardAdmin, childrenCardAdmin, manCardAdmin } = useSelector(
     (state) => state.cardsSlicer
@@ -21,10 +23,10 @@ export const MainPage = () => {
 
   const allCards =
     tab === "woman"
-      ? womanCardAdmin
+      ? womanCardAdmin || []
       : tab === "children"
-      ? childrenCardAdmin
-      : manCardAdmin;
+      ? childrenCardAdmin || []
+      : manCardAdmin || [];
 
   const filteredCards = sizeFilter
     ? allCards.filter((card) =>
@@ -41,23 +43,28 @@ export const MainPage = () => {
       <StyledFilterDiv>
         <StyledFilterIcon>
           Фильтры
-          <BaseIconButton onClick={openModalHandler}>
+          <BaseIconButton onClick={() => openModal("filter")}>
             <Icons.Filter />
           </BaseIconButton>
           <FilterModal
-            open={isFilterModalOpen}
-            onClose={closeModalHandler}
+            open={isOpen("filter")}
+            onClose={() => closeModal("filter")}
             size={sizeFilter}
             setSize={setSizeFilter}
             allCards={allCards}
           />
         </StyledFilterIcon>
       </StyledFilterDiv>
-      {filteredCards.length > 0 ? (
+      {Array.isArray(filteredCards) && filteredCards.length > 0 ? (
         <CardList array={filteredCards} />
       ) : (
         <StyledP>Пусто</StyledP>
       )}
+      {/* {filteredCards.length > 0 ? (
+        <CardList array={filteredCards} />
+      ) : (
+        <StyledP>Пусто</StyledP>
+      )} */}
     </Wrapper>
   );
 };
@@ -78,6 +85,8 @@ const StyledP = styled.p`
   display: flex;
   width: 100%;
   justify-content: center;
+  margin-top: 80px;
+  margin-bottom: 100px;
 `;
 const StyledFilterIcon = styled.div`
   position: absolute;

@@ -68,3 +68,4 @@ export const {
   editCardMan,
   editCardChildren,
 } = CardMainAdminSlicer.actions;
+export default CardMainAdminSlicer.reducer;
