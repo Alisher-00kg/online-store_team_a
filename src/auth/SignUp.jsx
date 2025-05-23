@@ -90,6 +90,7 @@ const SignUp = () => {
           <Input
             label="Email"
             name="email"
+            type={"email"}
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
