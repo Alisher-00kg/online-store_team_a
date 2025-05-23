@@ -2,8 +2,13 @@ import React from "react";
 import { Modal } from "./Modal";
 import { Box, styled } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
+import { useNavigate } from "react-router-dom";
 
 export const PaymentMethod = ({ open, onClose }) => {
+  const navigate = useNavigate();
+  const handleRegisterClick = () => {
+    navigate("/signup");
+  };
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -13,7 +18,9 @@ export const PaymentMethod = ({ open, onClose }) => {
           </h3>
           <StyledWrapperBtn>
             <BaseButton variantType="delete">Войти</BaseButton>или
-            <BaseButton variantType="delete">Зарегистрироваться</BaseButton>
+            <BaseButton variantType="delete" onClick={handleRegisterClick}>
+              Зарегистрироваться
+            </BaseButton>
           </StyledWrapperBtn>
         </StyledWrapper>
       </CenteredBox>

@@ -1,5 +1,9 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://df4281f12468a44a.mokky.dev",
+  baseURL: "https://558f9ebbb4bc4b6b.mokky.dev",
+  timeout: 8000,
+  headers: {
+    Accept: "application/json",
+  },
 });

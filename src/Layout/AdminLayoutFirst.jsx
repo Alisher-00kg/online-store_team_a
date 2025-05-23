@@ -1,53 +1,53 @@
-import React from "react";
+import { Icon } from "@mui/material";
 import { NavLink, Outlet } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Icons } from "../assets/icons/icon";
-import { Logo } from "../assets/images/images";
-import { AdminHeader } from "../components/adminComponents/AdminHeader";
 
-export const AdminLayout = () => {
+import { BrandName } from "../assets/images/images";
+
+const AdminLayoutFirst = () => {
   return (
     <StyledWrapper>
       <StyledAside>
-        <StyledImg src={Logo} alt="Brand" />
+        <StyledImg src={BrandName} alt="Brand" />
         <StyledNav>
-          <StyledNavLink to="woman">
+          <StyledNavLink to="/adminpage/womanpage">
             <StyledIcon as={Icons.Woman} />
-            <span>Woman Page</span>
+            Woman Page
           </StyledNavLink>
-          <StyledNavLink to="man">
+          <StyledNavLink to="/adminpage/manpage">
             <StyledIcon as={Icons.Man} />
-            <span>Man Page</span>
+            Man Page
           </StyledNavLink>
-          <StyledNavLink to="children">
+          <StyledNavLink to="/adminpage/childrenpage">
             <StyledIcon as={Icons.Children} />
-            <span>Children Page</span>
+            Children Page
           </StyledNavLink>
         </StyledNav>
       </StyledAside>
-      <StyledContent>
-        <AdminHeader />
+      <StyledDIv>
         <Outlet />
-      </StyledContent>
+      </StyledDIv>
     </StyledWrapper>
   );
 };
 
+export default AdminLayoutFirst;
+
 const StyledWrapper = styled.div`
   display: flex;
   min-height: 100vh;
-  background: rgb(30, 30, 30);
+  width: 90vw;
 `;
 
-const StyledContent = styled.div`
-  margin-left: 218px;
-  flex: 1;
-  padding: 32px;
+const StyledDIv = styled.div`
+  position: absolute;
+  right: 0;
+  height: 100%;
   background-color: rgb(250, 250, 251);
-  min-height: 100vh;
 `;
 const StyledAside = styled.aside`
-  background: rgb(255, 255, 255);
+  background-color: #fff;
   height: 100%;
   width: 218px;
   padding: 52px 19px 0px 19px;
@@ -59,19 +59,13 @@ const StyledAside = styled.aside`
 
 const StyledImg = styled.img`
   width: 180px;
-  height: 40px;
+  height: 16.18px;
 `;
 
 const StyledNav = styled.nav`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  span {
-    color: rgb(126, 132, 148);
-    font-family: Nunito;
-    font-weight: 600;
-    line-height: 22px;
-  }
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -113,33 +107,3 @@ const StyledIcon = styled.div`
       hue-rotate(172deg) brightness(95%) contrast(90%);
   }
 `;
-
-// const Container = styled.div`
-//   display: flex;
-//   min-height: 100vh;
-// `;
-
-// const Aside = styled.aside`
-//   width: 240px;
-//   background: rgb(255, 255, 255);
-//   color: white;
-//   padding: 20px;
-// `;
-
-// const Content = styled.main`
-//   flex: 1;
-//   padding: 20px;
-//   background: #f4f4f4;
-// `;
-
-// const MenuLink = styled(NavLink)`
-//   display: block;
-//   margin-bottom: 10px;
-//   color: white;
-//   text-decoration: none;
-
-//   &.active {
-//     font-weight: bold;
-//     text-decoration: underline;
-//   }
-// `;

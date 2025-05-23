@@ -1,7 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { CardItem } from "../components/CardItem";
+import { CardItem } from "../../components/userComponents/CardItem";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 export const FavoritePage = () => {
   const favoriteCards = useSelector((state) =>
@@ -19,7 +19,15 @@ export const FavoritePage = () => {
           </BoxTitle>
           <CardsWrapper>
             {favoriteCards.map((card) => (
-              <CardItem key={card.id} {...card} />
+              <CardItem
+                key={card.id}
+                id={card.id}
+                title={card.name}
+                price={card.price}
+                image={
+                  card.colors?.[0]?.image || "https://placehold.co/360x503"
+                }
+              />
             ))}
           </CardsWrapper>
         </>

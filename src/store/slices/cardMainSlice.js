@@ -12,24 +12,25 @@ export const CardMainSlicer = createSlice({
     favoriteCards: [],
   },
   reducers: {
-    toggleFavorite: (state, action) => {
-      const isExist = state.favoriteCards.find(
-        (item) => item.id === action.payload.id
-      );
-      if (!isExist) {
-        state.favoriteCards = [
-          ...state.favoriteCards,
-          { ...action.payload, quantity: 1 },
-        ];
-        state.mainCards = state.mainCards.map((item) =>
-          item.id === action.payload.id ? { ...item, isFavorite: true } : item
+    toggleFavorite: (state, { payload }) => {
+      const inFav = state.favoriteCards.some((c) => c.id === payload.id);
+      const cardWithImg = {
+        ...payload,
+        image: payload.image || payload.colors?.[0]?.image,
+        quantity: 1,
+      };
+
+      if (inFav) {
+        state.favoriteCards = state.favoriteCards.filter(
+          (c) => c.id !== payload.id
+        );
+        state.mainCards = state.mainCards.map((c) =>
+          c.id === payload.id ? { ...c, isFavorite: false } : c
         );
       } else {
-        state.favoriteCards = state.favoriteCards.filter(
-          (item) => item.id !== action.payload.id
-        );
-        state.mainCards = state.mainCards.map((item) =>
-          item.id === action.payload.id ? { ...item, isFavorite: false } : item
+        state.favoriteCards.push(cardWithImg);
+        state.mainCards = state.mainCards.map((c) =>
+          c.id === payload.id ? { ...c, isFavorite: true } : c
         );
       }
     },

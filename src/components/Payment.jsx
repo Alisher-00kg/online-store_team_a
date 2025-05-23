@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { BaseButton } from "./UI/BaseButton";
 import styled from "styled-components";
 import { Icons } from "../assets/icons/icon";
+import { useNavigate } from "react-router-dom";
 
 export const Payment = () => {
+  const navigate = useNavigate();
   const [selectedPayment, setSelectedPayment] = useState("wallet");
-
   const handleChange = (value) => {
     setSelectedPayment(value);
   };
+
   return (
     <Wrapper>
       <h3>Оформление заказа</h3>
@@ -61,7 +63,7 @@ export const Payment = () => {
           </PaymentOption>
         </PaymentList>
         <p>Итого</p>
-        <BaseButton>Заказать</BaseButton>
+        <BaseButton onClick={() => navigate("/main")}>Заказать</BaseButton>
       </InnerWrapper>
     </Wrapper>
   );
@@ -71,10 +73,15 @@ const Wrapper = styled.div`
   height: 500px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 16px 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 120px;
+  margin-bottom: 100px;
+  margin-left: 35%;
 `;
 const InnerWrapper = styled.div`
   display: flex;

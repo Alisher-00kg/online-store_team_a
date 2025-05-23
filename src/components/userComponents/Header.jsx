@@ -1,16 +1,16 @@
 import React from "react";
-import { BaseIconButton } from "./UI/BaseIconButton";
-import { Icons } from "../assets/icons/icon";
-import { Logo } from "../assets/images/images";
 import styled from "styled-components";
+import { Logo } from "../../assets/images/images";
+import { Icons } from "../../assets/icons/icon";
 import { useSelector } from "react-redux";
-import { useModal } from "../context/ModalContext";
-import { Badge } from "@mui/material";
-import { BasketModal } from "./modal/BasketModal";
+import { useModal } from "../../context/ModalContext";
 import { useNavigate } from "react-router-dom";
+import { BaseIconButton } from "../UI/BaseIconButton";
+import { Badge } from "@mui/material";
+import { BasketModal } from "../modal/BasketModal";
 
 export const Header = () => {
-  const { openModal, closeModal, isOpen } = useModal();
+  const { openModal, closeModal, isOpen } = useModal()
   const navigate = useNavigate();
   const total = useSelector((state) =>
     state.cardsSlicer.shopCards.reduce((acc, item) => acc + item.quantity, 0)

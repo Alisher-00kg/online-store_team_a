@@ -1,19 +1,18 @@
 import React, { useContext } from "react";
-import { AdminCard } from "../components/UI/AdminCard";
-import { BaseButton } from "../components/UI/BaseButton";
+import { BaseButton } from "../../components/UI/BaseButton";
 import styled from "styled-components";
-import { AddProductModal } from "../components/modal/AddProductModal";
+import { AddProductModal } from "../../components/modal/AddProductModal";
 import { useSelector } from "react-redux";
-import { Context } from "../context/ContextProvider";
+import { Context } from "../../context/ContextProvider";
+import { AdminCard } from "../../components/adminComponents/AdminCard";
 
-export const ChildrenPage = () => {
-  const { childrenCardAdmin } = useSelector((state) => state.cardsSlicer);
+export const WomanPage = () => {
+  const { womanCardAdmin } = useSelector((state) => state.cardsSlicer);
   const { addModal, setAddModal } = useContext(Context);
-
   return (
     <StyledSecondDiv>
       <StyledAddContainer>
-        <p>Детская</p>
+        <p>Женская</p>
         <StyledAdd>
           <StyledButton onClick={() => setAddModal(true)}>
             +Добавить
@@ -22,12 +21,12 @@ export const ChildrenPage = () => {
         <AddProductModal
           open={addModal}
           onClose={() => setAddModal(false)}
-          category="children"
+          category={"woman"}
         />
       </StyledAddContainer>
-      {childrenCardAdmin.map((item) => (
-        <AdminCard key={item.id} {...item} category="children" />
-      ))}
+      {womanCardAdmin.map((item) => {
+        return <AdminCard {...item} category="woman" />;
+      })}
     </StyledSecondDiv>
   );
 };
@@ -40,7 +39,9 @@ const StyledSecondDiv = styled.div`
   flex-direction: column;
   gap: 40px;
 `;
-const StyledButton = styled(BaseButton)``;
+const StyledButton = styled(BaseButton)`
+  height: 200px;
+`;
 const StyledAddContainer = styled.div`
   width: 1162px;
   height: 72px;
@@ -59,6 +60,4 @@ const StyledAddContainer = styled.div`
 const StyledAdd = styled.div`
   width: 120px;
   height: 40px;
-  display: flex;
-  align-items: center;
 `;

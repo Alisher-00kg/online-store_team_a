@@ -1,21 +1,17 @@
 import React, { useContext, useState } from "react";
-import { CardList } from "../components/CardList";
+import { CardList } from "../../components/userComponents/CardList";
 import styled from "styled-components";
-import { BaseIconButton } from "../components/UI/BaseIconButton";
-import { Icons } from "../assets/icons/icon";
-import { FilterModal } from "../components/modal/FilterModal";
+import { BaseIconButton } from "../../components/UI/BaseIconButton";
+import { Icons } from "../../assets/icons/icon";
+import { FilterModal } from "../../components/modal/FilterModal";
 import { useSelector } from "react-redux";
-import { Context } from "../context/ContextProvider";
-import { useModal } from "../context/ModalContext";
+import { Context } from "../../context/ContextProvider";
+import { useModal } from "../../context/ModalContext";
 
-export const MainPage = () => {
+export const SnackBar = () => {
   const { openModal, closeModal, isOpen } = useModal();
-  // const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [sizeFilter, setSizeFilter] = useState("");
   const { tab } = useContext(Context);
-
-  // const openModalHandler = () => setIsFilterModalOpen(true);
-  // const closeModalHandler = () => setIsFilterModalOpen(false);
 
   const { womanCardAdmin, childrenCardAdmin, manCardAdmin } = useSelector(
     (state) => state.cardsSlicer
@@ -60,11 +56,6 @@ export const MainPage = () => {
       ) : (
         <StyledP>Пусто</StyledP>
       )}
-      {/* {filteredCards.length > 0 ? (
-        <CardList array={filteredCards} />
-      ) : (
-        <StyledP>Пусто</StyledP>
-      )} */}
     </Wrapper>
   );
 };

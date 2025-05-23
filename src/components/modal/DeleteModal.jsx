@@ -3,10 +3,8 @@ import { BaseIconButton } from "../UI/BaseIconButton";
 import { Box, styled, Typography } from "@mui/material";
 import { BaseButton } from "../UI/BaseButton";
 import { Icons } from "../../assets/icons/icon";
-import { useDispatch } from "react-redux";
-import { deleteCardWoman } from "../../store/reducer/CardMainAdminslicer";
 
-export const DeleteModal = ({ open, onClose, deleteCard }) => {
+export const DeleteModal = ({ open, onClose, onDelete }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -24,7 +22,7 @@ export const DeleteModal = ({ open, onClose, deleteCard }) => {
               </BaseButton>
             </StyledBoxBtn>
             <StyledBoxBtn>
-              <BaseButton variantType="delete" onClick={deleteCard}>
+              <BaseButton variantType="delete" onClick={onDelete}>
                 Удалить
               </BaseButton>
             </StyledBoxBtn>

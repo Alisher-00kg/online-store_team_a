@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 export const Context = createContext();
 export const ContextProvider = ({ children }) => {
   const [addModal, setAddModal] = useState(false);
-  const [inputsValue, setIntputsValue] = useState({
+  const [inputsValue, setInputsValue] = useState({
     name: "",
     price: "",
     quantity: "",
@@ -21,7 +21,7 @@ export const ContextProvider = ({ children }) => {
         addModal,
         setAddModal,
         inputsValue,
-        setIntputsValue,
+        setInputsValue,
         colorFields,
         setColorFields,
         isEdit,
