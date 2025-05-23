@@ -1,18 +1,19 @@
-import React, { useContext, useState } from "react";
-import { AdminCard } from "../components/UI/AdminCard";
-import { BaseButton } from "../components/UI/BaseButton";
+import React, { useContext } from "react";
+import { BaseButton } from "../../components/UI/BaseButton";
 import styled from "styled-components";
-import { AddProductModal } from "../components/modal/AddProductModal";
+import { AddProductModal } from "../../components/modal/AddProductModal";
 import { useSelector } from "react-redux";
-import { Context } from "../context/ContextProvider";
+import { Context } from "../../context/ContextProvider";
+import { AdminCard } from "../../components/adminComponents/AdminCard";
 
-export const WomanPage = () => {
-  const { womanCardAdmin } = useSelector((state) => state.cardsSlicer);
+export const ManPage = () => {
+  const { manCardAdmin } = useSelector((state) => state.cardsSlicer);
   const { addModal, setAddModal } = useContext(Context);
+
   return (
     <StyledSecondDiv>
       <StyledAddContainer>
-        <p>Женская</p>
+        <p>Мужская</p>
         <StyledAdd>
           <StyledButton onClick={() => setAddModal(true)}>
             +Добавить
@@ -21,12 +22,12 @@ export const WomanPage = () => {
         <AddProductModal
           open={addModal}
           onClose={() => setAddModal(false)}
-          category={"woman"}
+          category="man"
         />
       </StyledAddContainer>
-      {womanCardAdmin.map((item) => {
-        return <AdminCard {...item} category="woman" />;
-      })}
+      {manCardAdmin.map((item) => (
+        <AdminCard key={item.id} {...item} category="man" />
+      ))}
     </StyledSecondDiv>
   );
 };
@@ -39,9 +40,7 @@ const StyledSecondDiv = styled.div`
   flex-direction: column;
   gap: 40px;
 `;
-const StyledButton = styled(BaseButton)`
-  height: 200px;
-`;
+const StyledButton = styled(BaseButton)``;
 const StyledAddContainer = styled.div`
   width: 1162px;
   height: 72px;

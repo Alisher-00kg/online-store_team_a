@@ -8,12 +8,15 @@ import styled from "styled-components";
 import { BaseIconButton } from "../components/UI/BaseIconButton";
 import { Icons } from "../assets/icons/icon";
 import validationSchema from "../utils/errorComponents";
-import { ErrorMessage } from "../components/UI/ErrorMessage";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setRole } from "../store/slices/authSlice";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -25,14 +28,23 @@ const SignUp = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log("Форма отправлена: ", values);
+      if (values.email === "adminaika@gmail.com") {
+        localStorage.setItem("role", "ADMIN");
+        dispatch(setRole("ADMIN"));
+        navigate("/admin/main");
+      } else {
+        localStorage.setItem("role", "GUEST");
+        dispatch(setRole("GUEST"));
+        navigate("/payment"); 
+      }
     },
   });
-
   const { setFieldValue } = formik;
-
   const handlePhoneChange = (value) => {
     setFieldValue("number", value);
+  };
+  const handleBlur = () => {
+    formik.setFieldTouched("number", true);
   };
 
   return (
@@ -72,7 +84,6 @@ const SignUp = () => {
           <StyledLable htmlFor="number">Номер телефона</StyledLable>
           <StyledInput
             id="number"
-            name="number"
             country="ru"
             enableAreaCodes
             inputClass="w-full"
@@ -81,6 +92,7 @@ const SignUp = () => {
             specialLabel=""
             value={formik.values.number}
             onBlur={formik.handleBlur}
+            inputProps={{ name: "number" }}
           />
           {formik.touched.number && formik.errors.number && (
             <ErrorText>{formik.errors.number}</ErrorText>

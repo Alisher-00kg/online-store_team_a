@@ -5,186 +5,59 @@ import { BaseIconButton } from "../UI/BaseIconButton";
 import { BaseButton } from "../UI/BaseButton";
 import { Icons } from "../../assets/icons/icon";
 import { useDispatch } from "react-redux";
-import {
-  addCardWoman,
-  editCardWoman,
-  addCardMan,
-  editCardMan,
-  addCardChildren,
-  editCardChildren,
-} from "../../store/reducer/CardMainAdminslicer";
 import { Context } from "../../context/ContextProvider";
+import { patchProduct, postProduct } from "../../store/thunks/addProductThunk";
 
-export const AddProductModal = ({ open, onClose, category }) => {
+export const AddProductModal = ({ open, onClose }) => {
   const dispatch = useDispatch();
+  const { isEdit, setIsEdit } = useContext(Context);
   const {
     inputsValue,
-    setIntputsValue,
+    setInputsValue,
     colorFields,
     setColorFields,
-    isEdit,
-    setIsEdit,
     setAddModal,
   } = useContext(Context);
-
   const [sizeError, setSizeError] = useState("");
-
+  const handleSave = async () => {
+    const { name, price, quantity, size } = inputsValue;
+    if (!name || !price || !quantity || !size) return;
+    const cardData = {
+      id: isEdit ?? crypto.randomUUID(),
+      ...inputsValue,
+      colors: colorFields,
+    };
+    try {
+      if (isEdit) {
+        await dispatch(patchProduct(cardData)).unwrap();
+      } else {
+        await dispatch(postProduct(cardData)).unwrap();
+      }
+      setInputsValue({ name: "", price: "", quantity: "", size: "" });
+      setColorFields([{ colorsquare: "", image: "", id: Date.now() }]);
+      setIsEdit(null);
+      onClose();
+    } catch (e) {
+      alert("Ошибка при сохранении: " + e);
+    }
+    setIsEdit(null);
+  };
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+    setInputsValue((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleColorFieldChange = (index, field, value) => {
+    const newFields = [...colorFields];
+    newFields[index][field] = value;
+    setColorFields(newFields);
+  };
   const addColorField = () => {
     setColorFields((prev) => [
       ...prev,
       { colorsquare: "", image: "", id: Date.now() },
     ]);
   };
-
-  useEffect(() => {
-    if (!open) {
-      setIntputsValue({
-        name: "",
-        price: "",
-        quantity: "",
-        size: "",
-      });
-      setColorFields([
-        {
-          colorsquare: "",
-          image: "",
-          id: Date.now(),
-        },
-      ]);
-      setSizeError("");
-    }
-  }, [open]);
-
-  const handleColorFieldChange = (index, field, value) => {
-    const updatedFields = [...colorFields];
-    updatedFields[index][field] = value;
-    setColorFields(updatedFields);
-  };
-
-  const inputHandler = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "size") {
-      const sizes = value
-        .split(",")
-        .map((s) => s.trim().toLowerCase())
-        .filter((s, i, arr) => s && arr.indexOf(s) === i);
-
-      const allowedSizes = ["xxs", "xs", "s", "m", "l", "xl", "xxl"];
-      const invalid = sizes.find((s) => !allowedSizes.includes(s));
-
-      if (invalid) {
-        setSizeError(`Недопустимый размер: ${invalid}`);
-      } else {
-        setSizeError("");
-      }
-
-      setIntputsValue((prev) => ({
-        ...prev,
-        [name]: sizes.join(", "),
-      }));
-    } else {
-      setIntputsValue((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
-
-  const getAddAction = () => {
-    if (category === "woman") return addCardWoman;
-    if (category === "man") return addCardMan;
-    if (category === "children") return addCardChildren;
-  };
-
-  const getEditAction = () => {
-    if (category == "woman") return editCardWoman;
-    if (category == "man") return editCardMan;
-    if (category == "children") return editCardChildren;
-  };
-
-  const handleSave = () => {
-    const { name, price, quantity, size } = inputsValue;
-    if (!name || !price || !quantity || !size) {
-      return;
-    }
-
-    const allowedColors = [
-      "black",
-      "white",
-      "red",
-      "blue",
-      "green",
-      "yellow",
-      "beige",
-      "gray",
-    ];
-    const colorsUsed = [];
-
-    const invalidColor = colorFields.find((c) => {
-      if (!c.colorsquare) return true;
-
-      const color = c.colorsquare.trim().toLowerCase();
-
-      if (colorsUsed.includes(color)) {
-        alert(`Цвет "${color}" уже добавлен`);
-        return true;
-      }
-
-      colorsUsed.push(color);
-
-      if (!allowedColors.includes(color)) {
-        alert(
-          `Цвет "${color}" недопустим. Допустимы: ${allowedColors.join(", ")}`
-        );
-        return true;
-      }
-
-      return false;
-    });
-
-    if (invalidColor) {
-      return;
-    }
-
-    const allowedSizes = ["xxs", "xs", "s", "m", "l", "xl", "xxl"];
-    const sizes = size.split(",").map((s) => s.trim().toLowerCase());
-
-    const invalidSize = sizes.find((s) => !allowedSizes.includes(s));
-    if (invalidSize) {
-      alert("Допустимы только размеры: XXS, XS, S, M, L, XL, XXL");
-      return;
-    }
-
-    const cardData = {
-      ...inputsValue,
-      colors: colorFields,
-      id: isEdit || Date.now(),
-    };
-
-    if (isEdit) {
-      dispatch(getEditAction()(cardData));
-      setIsEdit(null);
-    } else {
-      dispatch(getAddAction()(cardData));
-    }
-
-    setIntputsValue({
-      name: "",
-      price: "",
-      quantity: "",
-      size: "",
-    });
-    setColorFields([
-      {
-        colorsquare: "",
-        image: "",
-        id: Date.now(),
-      },
-    ]);
-    setSizeError("");
-    setAddModal(false);
-  };
+  if (!open) return null;
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -202,14 +75,18 @@ export const AddProductModal = ({ open, onClose, category }) => {
                 label="Название товара"
                 name="name"
                 value={inputsValue.name}
-                onChange={inputHandler}
+                onChange={(e) =>
+                  setInputsValue((p) => ({ ...p, name: e.target.value }))
+                }
               />
               <StyledInput
                 label="Цена"
                 type="number"
                 name="price"
                 value={inputsValue.price}
-                onChange={inputHandler}
+                onChange={(e) =>
+                  setInputsValue((p) => ({ ...p, price: e.target.value }))
+                }
               />
               <StyledInput
                 label="Количество в запасе"

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { IconButton } from "@mui/material";
 import { Icons } from "../../assets/icons/icon";
+import { AddProductModal } from "../modal/AddProductModal";
 import {
   addCardWoman,
   deleteCardWoman,
@@ -9,13 +10,12 @@ import {
   deleteCardChildren,
   addCardMan,
   deleteCardMan,
-  editCardWoman,
-  editCardMan,
-  editCardChildren,
 } from "../../store/reducer/CardMainAdminslicer";
 import { useDispatch, useSelector } from "react-redux";
 import { Context } from "../../context/ContextProvider";
 import { DeleteModal } from "../modal/DeleteModal";
+import { useModal } from "../../context/ModalContext";
+import { deleteProduct } from "../../store/thunks/addProductThunk";
 
 export const AdminCard = ({
   id,
@@ -27,23 +27,21 @@ export const AdminCard = ({
   category = "woman",
 }) => {
   const dispatch = useDispatch();
+  const { openModal, closeModal, isOpen } = useModal();
   const { womanCardAdmin, childrenCardAdmin, manCardAdmin } = useSelector(
-    (state) => state.cardsSlicer
+    (state) => state.cardsAdminSlicer
   );
-  const [modalDelete, setModalDelete] = useState(false);
-
   const {
-    inputsValue,
-    setIntputsValue,
+    setInputsValue,
     setAddModal,
     setColorFields,
     setIsEdit,
   } = useContext(Context);
 
   const getCategoryList = () => {
-    if (category === "woman") return womanCardAdmin;
-    if (category === "children") return childrenCardAdmin;
-    if (category === "man") return manCardAdmin;
+    if (category === "woman") return womanCardAdmin || [];
+    if (category === "children") return childrenCardAdmin || [];
+    if (category === "man") return manCardAdmin || [];
     return [];
   };
 
@@ -58,31 +56,32 @@ export const AdminCard = ({
     if (category === "children") return deleteCardChildren;
     if (category === "man") return deleteCardMan;
   };
-
+  const currentItem = { id, name, price, quantity, size, colors, category };
   const findedItem = getCategoryList().find((item) => item.id === id);
-
-  const reEdit = (obj) => {
-    setIntputsValue({
-      name: obj.name,
-      price: obj.price,
-      quantity: obj.quantity,
-      size: obj.size,
+  const reEdit = () => {
+    setInputsValue({
+      name,
+      price,
+      quantity,
+      size,
     });
     setColorFields(
-      obj.colors.map((i) => ({
-        ...i,
-        id: i.id,
-      }))
+      (colors || []).map((c) => ({ ...c, id: c.id ?? crypto.randomUUID() }))
     );
     setIsEdit(id);
     setAddModal(true);
   };
-
-  const deleteCard = () => {
-    dispatch(getDeleteAction()(id));
-    setModalDelete(false);
+  const handleDelete = async () => {
+    try {
+      const res = await dispatch(deleteProduct(id));
+      if (deleteProduct.fulfilled.match(res)) {
+        closeModal("delete");
+        dispatch(getProduct());
+      }
+    } catch (err) {
+      console.error("Ошибка при удалении:", err);
+    }
   };
-
   return (
     <STyledWrapper>
       <StyledFirstLIne>
@@ -95,16 +94,25 @@ export const AdminCard = ({
           >
             <Icons.CopyPaper />
           </IconButton>
-          <IconButton onClick={() => reEdit(findedItem)}>
+          <IconButton
+            onClick={() => {
+              reEdit(findedItem);
+              openModal("edit");
+            }}
+          >
             <Icons.EditBasket />
           </IconButton>
-          <IconButton onClick={() => setModalDelete(true)}>
+          <IconButton
+            onClick={() => {
+              openModal("delete");
+            }}
+          >
             <Icons.Basket />
           </IconButton>
           <DeleteModal
-            open={modalDelete}
-            onClose={() => setModalDelete(false)}
-            deleteCard={deleteCard}
+            open={isOpen("delete")}
+            onClose={() => closeModal("delete")}
+            onDelete={handleDelete}
           />
         </StyleICONSDIV>
       </StyledFirstLIne>
@@ -134,12 +142,16 @@ export const AdminCard = ({
               <span>Запас</span>
             </STyledDIvz2>
             <STyledDIvz2>
-              <p>{price} Сом</p>
+              <p>{price} KGS</p>
               <span>Цена</span>
             </STyledDIvz2>
           </STyledDIvz>
         </StyledDiv>
       </StyledSecondDiv>
+      <AddProductModal
+        open={isOpen("edit")}
+        onClose={() => closeModal("edit")}
+      />
     </STyledWrapper>
   );
 };

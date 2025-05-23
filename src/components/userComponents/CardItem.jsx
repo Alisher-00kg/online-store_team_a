@@ -1,46 +1,42 @@
 import styled from "styled-components";
-import { BaseIconButton } from "./UI/BaseIconButton";
-import { Icons } from "../assets/icons/icon";
-import { BaseButton } from "./UI/BaseButton";
+import { BaseIconButton } from "../UI/BaseIconButton";
+import { Icons } from "../../assets/icons/icon";
+import { BaseButton } from "../UI/BaseButton";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToBasket, toggleFavorite } from "../store/reducer/cardMainSlice";
+import { addToBasket, toggleFavorite } from "../../store/slices/cardMainSlice";
 
-export const CardItem = ({ id, name, price, quantity, size, colors }) => {
+export const CardItem = ({ id, name, price, image, colors = [] }) => {
   const navigate = useNavigate();
-  const handleCardClick = () => {
-    navigate(`/main/${id}`);
-  };
+  const imgSrc = image || colors[0]?.image || "/placeholder.jpg";
   const dispatch = useDispatch();
-  const mainCards = useSelector((state) => state.cardsSlicer.mainCards);
-  const currentCard = mainCards.find((card) => card.id === id);
-  const isFavorite = currentCard?.isFavorite;
-  const handleAddToBasket = () => {
-    dispatch(addToBasket({ id, image, title, price }));
-  };
-  const handleAddToFavorite = () => {
-    if (isFavorite) {
-      const confirmDelete = window.confirm("Удалить товар из избранного?");
-      if (!confirmDelete) return;
-    }
-    dispatch(toggleFavorite({ id, image, title, price, status }));
+  const isFavorite = useSelector(
+    (s) => s.cardsSlicer.mainCards.find((c) => c.id === id)?.isFavorite
+  );
+
+  const goToCard = () => navigate(`/main/${id}`);
+
+  const addToCart = () => dispatch(addToBasket({ id, name, price, image }));
+
+  const toggleFav = () => {
+    if (isFavorite && !window.confirm("Удалить из избранного?")) return;
+    dispatch(toggleFavorite({ id }));
   };
   return (
     <StyledWrapper>
-      <StyledImg src={image} alt="image" onClick={() => handleCardClick(id)} />
-      {/* <StyledImg src={image} alt="image" /> */}
+      <StyledImg src={imgSrc} alt={name} onClick={goToCard} />
       <StyledSecondLine>
         <StyledDescription>
           <StyledDiv>
             <StyledNewP>New New</StyledNewP>
             <StyledsecondP>{name}</StyledsecondP>
-            <StyledSpan>{price}</StyledSpan>
+            <StyledSpan>KGS {price}</StyledSpan>
           </StyledDiv>
-          <StyledBaseIconBtn onClick={handleAddToFavorite}>
+          <StyledBaseIconBtn onClick={toggleFav}>
             {isFavorite ? <Icons.GreenHeart /> : <Icons.Heart />}
           </StyledBaseIconBtn>
         </StyledDescription>
-        <BaseButton onClick={handleAddToBasket}>Добавить в корзину</BaseButton>
+        <BaseButton onClick={addToCart}>Добавить в корзину</BaseButton>
       </StyledSecondLine>
     </StyledWrapper>
   );

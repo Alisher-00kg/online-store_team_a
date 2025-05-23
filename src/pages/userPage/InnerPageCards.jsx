@@ -1,27 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BaseButton } from "../components/UI/BaseButton";
+import { BaseButton } from "../../components/UI/BaseButton";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
+import { addToBasket } from "../../store/slices/cardMainSlice";
 import { useDispatch } from "react-redux";
-import { addToBasket } from "../store/reducer/cardMainSlice";
 
 export const InnerPageCards = () => {
-  const { womanCardAdmin } = useSelector((state) => state.cardsSlicer);
   const { cardId } = useParams();
   const dispatch = useDispatch();
-  const selectedCard = cards.find((card) => card.id === Number(cardId));
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [selectedCard, setSelectedCard] = useState(null);
+  useEffect(() => {
+    const fetchCard = async () => {
+      try {
+        const res = await fetch(
+          `https://558f9ebbb4bc4b6b.mokky.dev/products/${cardId}`
+        );
+        const data = await res.json();
+        console.log("Данные карточки:", data);
+        setSelectedCard(data);
+      } catch (err) {
+        console.error("Ошибка загрузки карточки:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCard();
+  }, [cardId]);
+
   const handleAddToBasket = () => {
     dispatch(addToBasket(selectedCard));
   };
-  if (!selectedCard) return <p>Карточка не найдена</p>;
 
+  if (loading) return <p>Загрузка...</p>;
+  if (!selectedCard) return <p>Карточка не найдена</p>;
   return (
     <Wrapper>
       <StyledImageBlock>
@@ -30,19 +50,21 @@ export const InnerPageCards = () => {
             direction="vertical"
             onSwiper={setThumbsSwiper}
             slidesPerView={4}
-            spaceBetween={-30}
+            spaceBetween={10}
             navigation
             watchSlidesProgress
             modules={[Thumbs, Navigation]}
+            style={{ height: "400px" }}
           >
-            {selectedCard.images?.map((img, index) => (
-              <SwiperSlide key={index}>
+            {selectedCard.colors?.map((colorObj, index) => (
+              <SwiperSlide
+                key={index}
+                style={{ height: "80px", width: "85px" }}
+              >
                 <StyledImage
-                  src={img}
-                  alt="thumb"
-                  style={{
-                    height: "87px",
-                  }}
+                  src={colorObj.image}
+                  alt={`thumb-${index}`}
+                  style={{ marginTop: 0 }}
                 />
               </SwiperSlide>
             ))}
@@ -55,9 +77,9 @@ export const InnerPageCards = () => {
             modules={[Navigation, Thumbs]}
             style={{ width: "100%", height: "100%" }}
           >
-            {selectedCard.images?.map((img, index) => (
+            {selectedCard.colors?.map((colorObj, index) => (
               <SwiperSlide key={index}>
-                <img src={img} alt="main" />
+                <img src={colorObj.image} alt={`main-${index}`} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -65,8 +87,8 @@ export const InnerPageCards = () => {
       </StyledImageBlock>
       <WrapperDataProduct>
         <BoxTitlePrice>
-          <p>{selectedCard.title}</p>
-          <span>KGS{selectedCard.price}</span>
+          <p>{selectedCard.name}</p>
+          <span> KGS{selectedCard.price}</span>
         </BoxTitlePrice>
         <div>
           {selectedCard.colors?.map((clr, index) => (
@@ -75,8 +97,8 @@ export const InnerPageCards = () => {
               onClick={() => setSelectedColorIndex(index)}
               $isSelected={index === selectedColorIndex}
             >
-              <img src={clr.color} alt={clr.colorTitle} />
-              {index === selectedColorIndex && <span>{clr.colorTitle}</span>}
+              <img src={clr.image} alt={clr.colorsquare} />
+              {index === selectedColorIndex && <span>{clr.colorsquare}</span>}
             </BoxColor>
           ))}
         </div>
@@ -141,7 +163,6 @@ const StyledImage = styled.img`
   height: 100%;
   object-fit: contain;
   border-radius: 8px;
-  margin-top: 40px;
 `;
 const StyledMainImage = styled.div`
   width: 581px;

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Modal } from "./Modal";
-import { Box, styled, Typography } from "@mui/material";
-import { BaseButton } from "../UI/BaseButton";
-import { PaymentMethod } from "./PaymentMethod";
-import { useModal } from "../../context/ModalContext";
-import { BaseIconButton } from "../UI/BaseIconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { decrease, increase } from "../../store/reducer/cardMainSlice";
+import { useModal } from "../../context/ModalContext";
+import { useState } from "react";
+import { BaseIconButton } from "../UI/BaseIconButton";
 import { Icons } from "../../assets/icons/icon";
+import { BaseButton } from "../UI/BaseButton";
+import { Box, styled, Typography } from "@mui/material";
+import { PaymentMethod } from "./PaymentMethod";
+import { decrease, increase } from "../../store/slices/cardMainSlice";
+import { Modal } from "./Modal";
 
 export const BasketModal = ({ open, onClose }) => {
   const { openModal, closeModal, isOpen } = useModal();
@@ -18,7 +18,6 @@ export const BasketModal = ({ open, onClose }) => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-
   return (
     <Modal open={open} onClose={onClose}>
       <CenteredBox>
@@ -69,7 +68,7 @@ export const BasketModal = ({ open, onClose }) => {
                           <BaseIconButton
                             onClick={() => dispatch(decrease(item.id))}
                           >
-                            <Icons.Minus/>
+                            <Icons.Minus />
                           </BaseIconButton>
                           <div>{item.quantity}</div>
                           <BaseIconButton
@@ -94,7 +93,9 @@ export const BasketModal = ({ open, onClose }) => {
                 <span>KGS {totalPrice}</span>
               </BoxPayment>
               <StyledBoxBtn>
-                <BaseButton> Перейти к оплте</BaseButton>
+                <BaseButton onClick={() => openModal("payment")}>
+                  Перейти к оплте
+                </BaseButton>
               </StyledBoxBtn>
             </>
           )}
